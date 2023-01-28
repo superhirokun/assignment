@@ -7,26 +7,26 @@
 using namespace std;
 
 
-// void Stats()
-// {
-//     int hp, attack, range, move_tile;
-//     int hp_list[] = {50, 100, 150, 200, 250};
-//     int attack_list[] = {2, 4, 6, 8};
-//     int range_list[] = {1, 2, 3, 4};
-//     int move_tile_list[] = {1, 2, 3, 4};
+void Stats()
+{
+    int hp, attack, range, move_tile;
+    int hp_list[] = {50, 100, 150, 200, 250};
+    int attack_list[] = {2, 4, 6, 8};
+    int range_list[] = {1, 2, 3, 4};
+    int move_tile_list[] = {1, 2, 3, 4};
 
-//     int ran_hp = hp_list[rand() % sizeof(hp_list)/sizeof(int)];
-//     int ran_attack = attack_list[rand() % sizeof(attack_list)/sizeof(int)];
-//     int ran_range = range_list[rand() % sizeof(range_list)/sizeof(int)];
-//     int ran_move_tile = move_tile_list[rand() % sizeof(move_tile_list)/sizeof(int)];
+    int ran_hp = hp_list[rand() % sizeof(hp_list)/sizeof(int)];
+    int ran_attack = attack_list[rand() % sizeof(attack_list)/sizeof(int)];
+    int ran_range = range_list[rand() % sizeof(range_list)/sizeof(int)];
+    int ran_move_tile = move_tile_list[rand() % sizeof(move_tile_list)/sizeof(int)];
 
-//     hp = ran_hp;
-//     attack = ran_attack;
-//     range = ran_range;
-//     move_tile = ran_move_tile;
+    hp = ran_hp;
+    attack = ran_attack;
+    range = ran_range;
+    move_tile = ran_move_tile;
 
-//     cout << "hp : " << hp << " |" << "attack : " << attack << " |" << "range : " << range << " |" << "move_tile : " << move_tile << endl;
-// }
+    cout << "hp : " << hp << " |" << "attack : " << attack << " |" << "range : " << range << " |" << "move_tile : " << move_tile << endl;
+}
 
 // void zombies_spawns()
 // {
