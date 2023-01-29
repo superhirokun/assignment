@@ -38,7 +38,7 @@ void start_game()
 int main()
 {
     srand(time(NULL));
-    int x, y;
+    int x, y; char c;
     cout << "PLease entre the row of your selection = " ;
     cin >> x;
     cout << "Please entre the number of colums = ";
@@ -49,7 +49,7 @@ int main()
     }
     else 
     {
-        game mygame(x, y);
+        game mygame(x, y, c);
         mygame.display();
     }
 }

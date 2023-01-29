@@ -8,22 +8,24 @@ class game
     vector< vector <char> > map; 
     public:
     int x, y;
-    game(int x, int y);
+    game(int x, int y, char c);
     void init(int x, int y);
     void display()const;
     void update_cell(int x, int y, char c);
 };
 
 
-game::game(int x, int y)
+game::game(int x, int y, char c)
 {
     init(x, y);
+    //update_cell(x , y , c);
 }
 
 //update the board from another header files
 void game::update_cell(int x, int y, char c) 
 {
     map[y][x] = c;
+    c = 'A';
 }
 
 void game::init(int x, int y)

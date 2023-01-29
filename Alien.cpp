@@ -8,7 +8,7 @@ class alien: public game{
     vector< vector <char> > map;
     int x, y;
     public:
-    alien(int x, int y) : game(x, y), x(x), y(y) {}
+    alien(int x, int y, char c) : game(x, y , c) {}
     void move(char direction);
     int getX(){ return x;}
     int getY(){ return y;}
