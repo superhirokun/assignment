@@ -1,11 +1,4 @@
-#include<iostream>
-#include <string>
-#include <vector>
-#include <cstdlib> 
-#include <ctime> 
-#include <iomanip> 
-#include"board.h"
-#include "alien.cpp"
+#include "include.h"
 using namespace std;
 
 int main()
@@ -24,7 +17,5 @@ int main()
     {
         game mygame(x, y);
         mygame.display();
-        alien a1(x,y);
-        a1.move('U');
     }
 }

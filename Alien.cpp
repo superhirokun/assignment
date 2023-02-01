@@ -1,7 +1,4 @@
-#include <iostream>
 using namespace std;
-#include <vector>
-#include "board.h"
 
 class alien: public game{
     private:
