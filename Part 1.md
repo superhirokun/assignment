@@ -43,7 +43,7 @@ Yap Choo Kath Moon
 2. Randomly generate the game object
 3. Added alien to the centre of the board
 4. randomize the zombies stats
-5. 
+
 Fu ke yun
 
 Turn based system
