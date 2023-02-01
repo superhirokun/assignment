@@ -37,6 +37,10 @@ void start_game()
 
 int main()
 {
+    //1 PLAY--> 2
+    //2 GAME settings--> 1 play 2 back
+    //3 manual
+
     srand(time(NULL));
     int x, y; char c;
     cout << "PLease entre the row of your selection = " ;
@@ -49,7 +53,7 @@ int main()
     }
     else 
     {
-        game mygame(x, y, c);
+        game mygame(x, y);
         mygame.display();
     }
 }

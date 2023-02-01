@@ -6,15 +6,25 @@ using namespace std;
 class alien: public game{
     private:
     vector< vector <char> > map;
-    int x, y;
+    int dx, dy;
     public:
-    alien(int x, int y, char c) : game(x, y , c) {}
-    void move(char direction);
-    int getX(){ return x;}
-    int getY(){ return y;}
+    int x , y;
+    alien(int x, int y) : game(x, y) {}
+    void move(int direction);
+    void centre(int x, int y);
 };
 
-void alien::move(char direction)
+alien::alien(int x, int y):game(x , y){}
+
+void alien::centre(int x, int y)
+{
+    dx =x ; dy = y;
+    int centreX = x/2;
+    int centreY = y/2;
+    map[centreX][centreY] = 'A';
+}
+
+void alien::move(int direction)
 {
     // Find the current position of the alien
     int x, y;
@@ -32,30 +42,26 @@ void alien::move(char direction)
         }
     }
     // Update the position of the alien based on the direction
-    switch(direction){
-        case 'up':
-        case 'Up':
-            map[x][y] = '.';
-            map[x][y+1] = "A";
-            break;
+    // switch(direction){
+    //     case 'U':
+    //         map[x][y] = '.';
+    //         map[x][y+1] = "A";
+    //         break;
 
-        case 'down':
-        case 'Down':
-            map[x][y] = '.';
-            map[x][y-1] = 'A';
-            break;
+    //     case 'D':
+    //         map[x][y] = '.';
+    //         map[x][y-1] = 'A';
+    //         break;
 
-        case 'right':
-            map[x][y] = '.';
-            map[x+1][y] = 'A';
-            break;
+    //     case 'R':
+    //         map[x][y] = '.';
+    //         map[x+1][y] = 'A';
+    //         break;
 
-        case 'left':
-        case 'Left':
-            map[x][y] = '.';
-            map[x-1][y] = 'A';
-            break;
+    //     case 'L':
+    //         map[x][y] = '.';
+    //         map[x-1][y] = 'A';
+    //         break;
 
-    }
+    // }
 }
-

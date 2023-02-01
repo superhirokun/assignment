@@ -8,24 +8,24 @@ class game
     vector< vector <char> > map; 
     public:
     int x, y;
-    game(int x, int y, char c);
+    game(int x, int y);
     void init(int x, int y);
     void display()const;
-    void update_cell(int x, int y, char c);
+    void update_cell(int x, int y);
 };
 
 
-game::game(int x, int y, char c)
+game::game(int x, int y)
 {
+    update_cell(x , y);
     init(x, y);
-    //update_cell(x , y , c);
 }
 
 //update the board from another header files
-void game::update_cell(int x, int y, char c) 
+void game::update_cell(int x, int y)
 {
-    map[y][x] = c;
-    c = 'A';
+    alien a(x, y);
+    a.centre(x, y);
 }
 
 void game::init(int x, int y)
@@ -46,9 +46,8 @@ void game::init(int x, int y)
             map[i][k] = obj[obj_no];
         }
     }
-    int centerX = dimX / 2;
-    int centerY = dimY / 2;
-    map[centerX][centerY] = 'A';
+    game g1(x, y);
+    g1.update_cell(x, y);
 }
 
 void game::display()const
