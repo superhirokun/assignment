@@ -23,14 +23,13 @@ List all the features not yet done. Remove this section if there is no incomplet
 1. Need to add game attributes like health points, hitpoints.
 2. Need to add zombies class.
 3. Need to make the game objects interactive.
-4. Need to make the alien move with user inputs.
-5. Need to add saving game files, and loading game files features.
 6. Need to add alien trails when the alien moves.
 7. Need makes sure the alien stops when it hits the rock and the game board boundary.
+8. Need to make the alien move.
 
 ## Additional Features
 
-Describe the additional features that has been implemented.
+no additional features has been impemented 
 
 ## Contributions
 
@@ -42,13 +41,17 @@ Yap Choo Kath Moon
 
 1. Randomly generate game board.
 2. Randomly generate the game object
-3. *add more*
-### Steve Rogers
+3. Added alien to the centre of the board
+4. randomize the zombies stats
+5. 
+Fu ke yun
 
-1. Zombie movement and attack behaviour.
-2. *add more*
+Turn based system
+Save and load data
+main (Include game setting and instruction)
 
 
 ## Problems Encountered & Solutions
-
+the need to link the files together
+use header files to do it
 
