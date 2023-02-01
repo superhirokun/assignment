@@ -1,3 +1,4 @@
+#pragma once
 using namespace std;
 class game
 {
@@ -44,8 +45,7 @@ void game::init(int x, int y)
             map[i][k] = obj[obj_no];
         }
     }
-    game g1(x, y);
-    g1.update_cell(x, y);
+    update_cell(x, y);
 }
 
 void game::display()const
