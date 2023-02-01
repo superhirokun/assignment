@@ -5,6 +5,7 @@
 #include <ctime> 
 #include <iomanip> 
 #include"board.h"
+#include "alien.cpp"
 using namespace std;
 
 void guide()
@@ -37,10 +38,6 @@ void start_game()
 
 int main()
 {
-    //1 PLAY--> 2
-    //2 GAME settings--> 1 play 2 back
-    //3 manual
-
     srand(time(NULL));
     int x, y; char c;
     cout << "PLease entre the row of your selection = " ;
@@ -55,5 +52,7 @@ int main()
     {
         game mygame(x, y);
         mygame.display();
+        alien a1(x,y);
+        a1.move('U');
     }
 }

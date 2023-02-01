@@ -41,27 +41,27 @@ void alien::move(int direction)
             }
         }
     }
-    // Update the position of the alien based on the direction
-    // switch(direction){
-    //     case 'U':
-    //         map[x][y] = '.';
-    //         map[x][y+1] = "A";
-    //         break;
+    //Update the position of the alien based on the direction
+    switch(direction){
+        case 'U':
+            map[x][y] = '.';
+            map[x][y+1] = 'A';
+            break;
 
-    //     case 'D':
-    //         map[x][y] = '.';
-    //         map[x][y-1] = 'A';
-    //         break;
+        case 'D':
+            map[x][y] = '.';
+            map[x][y-1] = 'A';
+            break;
 
-    //     case 'R':
-    //         map[x][y] = '.';
-    //         map[x+1][y] = 'A';
-    //         break;
+        case 'R':
+            map[x][y] = '.';
+            map[x+1][y] = 'A';
+            break;
 
-    //     case 'L':
-    //         map[x][y] = '.';
-    //         map[x-1][y] = 'A';
-    //         break;
+        case 'L':
+            map[x][y] = '.';
+            map[x-1][y] = 'A';
+            break;
 
-    // }
+    }
 }
