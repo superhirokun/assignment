@@ -1,4 +1,4 @@
-#pragma once
+//#pragma once
 using namespace std;
 
 
@@ -13,11 +13,14 @@ class alien: public game{
     void centre(int x, int y);
 };
 
+
+
 alien::alien(int x, int y):game(x , y){}
 
 void alien::centre(int x, int y)
 {
-    dx =x ; dy = y;
+    this->dx =x ; 
+    this->dy = y;
     int centreX = x/2;
     int centreY = y/2;
     map[centreX][centreY] = 'A';

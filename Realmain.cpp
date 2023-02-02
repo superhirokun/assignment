@@ -1,4 +1,4 @@
-#include "include.h"
+#include"board.h"
 using namespace std;
 
 int main()
@@ -17,5 +17,6 @@ int main()
     {
         game mygame(x, y);
         mygame.display();
+
     }
 }

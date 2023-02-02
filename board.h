@@ -1,4 +1,11 @@
-#pragma once
+//#pragma once
+#include<iostream>
+#include <string>
+#include <vector>
+#include <cstdlib> 
+#include <ctime> 
+#include <iomanip>
+#include "Alien.cpp"
 using namespace std;
 class game
 {
@@ -23,7 +30,7 @@ game::game(int x, int y)
 //update the board from another header files
 void game::update_cell(int x, int y)
 {
-    alien a(x, y);
+    alien a(x,y);
     a.centre(x, y);
 }
 
