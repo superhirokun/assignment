@@ -1,12 +1,11 @@
-//#pragma once
 #include<iostream>
 #include <string>
 #include <vector>
 #include <cstdlib> 
 #include <ctime> 
 #include <iomanip>
-#include "Alien.cpp"
 using namespace std;
+
 class game
 {
     private:
@@ -17,21 +16,13 @@ class game
     game(int x, int y);
     void init(int x, int y);
     void display()const;
-    void update_cell(int x, int y);
+    void update_cell(int x, int y, char val);
+    void move(char direction);
 };
-
 
 game::game(int x, int y)
 {
-    update_cell(x , y);
     init(x, y);
-}
-
-//update the board from another header files
-void game::update_cell(int x, int y)
-{
-    alien a(x,y);
-    a.centre(x, y);
 }
 
 void game::init(int x, int y)
@@ -52,8 +43,15 @@ void game::init(int x, int y)
             map[i][k] = obj[obj_no];
         }
     }
-    update_cell(x, y);
+    int centreX = dimX/2;
+    int centreY = dimY/2;
+    update_cell(centreX, centreY , 'A');
 }
+
+void game::update_cell(int x, int y, char val){
+    map[y][x] = val;
+}
+
 
 void game::display()const
 {
@@ -97,3 +95,4 @@ void game::display()const
     }
     cout << endl << endl;
 }
+

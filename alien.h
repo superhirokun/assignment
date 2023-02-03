@@ -1,35 +1,34 @@
-#pragma once
+#include <vector>
+#include <iostream>
 using namespace std;
 
-
-class alien: public game{
+class alien:public game{
     private:
-    vector< vector <char> > map;
-    int dx, dy;
+    vector < vector < char > > map;
+    int dx ,dy;
     public:
-    int x , y;
-    alien(int x, int y) : game(x, y) {}
-    void move(int direction);
+    int x;
+    int y;
+    alien(int x, int y);
+    void direction(char direction);
     void centre(int x, int y);
 };
 
-
-
-alien::alien(int x, int y):game(x , y){}
+alien::alien(int x, int y): game(x,y){
+    
+}
 
 void alien::centre(int x, int y)
 {
-    this->dx =x ; 
-    this->dy = y;
+    dx = x; dy = y; 
     int centreX = x/2;
     int centreY = y/2;
     map[centreX][centreY] = 'A';
 }
 
-void alien::move(int direction)
+void alien::direction(char direction)
 {
-    // Find the current position of the alien
-    int x, y;
+    int x,y;
     bool found = false;
     for (int i = 0; i < y && !found; ++i)
     {
@@ -43,7 +42,6 @@ void alien::move(int direction)
             }
         }
     }
-    //Update the position of the alien based on the direction
     switch(direction){
         case 'U':
             map[x][y] = '.';

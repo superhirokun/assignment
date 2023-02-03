@@ -1,10 +1,10 @@
-#include"board.h"
+#include "board.h"
 using namespace std;
 
 int main()
 {
     srand(time(NULL));
-    int x, y; char c;
+    int x, y;
     cout << "PLease entre the row of your selection = " ;
     cin >> x;
     cout << "Please entre the number of colums = ";
@@ -19,4 +19,5 @@ int main()
         mygame.display();
 
     }
+
 }
