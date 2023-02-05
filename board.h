@@ -20,12 +20,15 @@ class game
         int get_x()const;
         int get_y()const;
 
-        char trail() ;
         char moveup();
         char movedown();
         char moveright();
         char moveleft();
 
+        void checkup(bool stap);
+        void checkdown(bool stap);
+        void checkright(bool stap);
+        void checkleft(bool stap);
         void init(int x, int y);
         void display()const;
         void update_cell(int x, int y, char val);
@@ -79,12 +82,47 @@ void game::position(int &x, int &y)
         }
     }
 }
-// char game::trail()
-// {
-//     position(x,y);
-//     update_cell(x, y, '.');
-//     return 0;
-// }
+
+void game::checkup(bool stap){
+    position(x,y);
+    int nx =- x;
+    if(nx = 'R' || nx < 0 ){
+        stap = true;
+    }
+    else{
+        stap = false;
+    }
+}
+void game::checkdown(bool stap){
+    int nx =+ x;
+    position(x,y);
+    if(nx = 'R' ||  nx >=getdimX()){
+        stap = true;
+    }
+    else{
+        stap = false;
+    }
+}
+void game::checkright(bool stap){
+    position(x,y);
+    int ny =+ y;
+    if(ny = 'R' || ny >=getdimY()){
+        stap = true;
+    }
+    else{
+        stap = false;
+    }
+}
+void game::checkleft(bool stap){
+    position(x,y);
+    int ny =- y;
+    if(ny = 'R' || ny < 0){
+        stap = true;
+    }
+    else{
+        stap = false;
+    }
+}
 
 char game::moveup(){
     position(x,y);
@@ -101,13 +139,13 @@ char game::movedown(){
 char game::moveright(){
     position(x,y);
     update_cell(x, y, '.');
-    update_cell(x, y+1, 'A');
+    update_cell(x, ++y, 'A');
     return 0;
 }
 char game::moveleft(){
     position(x,y);
     update_cell(x, y, '.');
-    update_cell(x, y-1, 'A');
+    update_cell(x, --y, 'A');
     return 0;
 }
 
@@ -204,32 +242,49 @@ int alien::getY()const{
 
 void alien::move(game &game) {
     char move;
+    bool stap;
     cout << "Enter move (U/D/L/R): ";
     cin >> move;
     switch (move) {
         case 'u':
         case 'U':
+            do
+            {
             game.moveup();
-            //game.trail();
             game.display();
+            game.checkup(stap);
+            } while (stap = true);
+            
             break;
         case 'd':
         case 'D':
+        do
+        {
             game.movedown();
-            //game.trail();
             game.display();
+            game.checkdown(stap);
+        } while (stap = true);
+        
             break;
         case 'l':
         case 'L':
+        do
+        {
             game.moveleft();
-            //game.trail();
             game.display();
+            game.checkright(stap);
+        } while (stap = true);
+        
             break;
         case 'r':
         case 'R':
+        do
+        {
             game.moveright();
-            //game.trail();
             game.display();
+            game.checkleft(stap);
+        } while (stap = true);
+        
             break;
         default:
             cout << "Invalid move." << endl;
