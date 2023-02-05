@@ -43,7 +43,7 @@ class Rover: public Mars
         void turnLeft(Mars &mars);
         void turnRight(Mars &mars);
         void move(Mars &mars);
-        void autoMove(Mars &mars, Rover &curiosity);
+        //void autoMove(Mars &mars, Rover &curiosity);
         int getMoney(Mars &mars);
 };
 
@@ -428,7 +428,7 @@ void test2_3(){
     Mars mars;
     Rover curiosity;
 
-    curiosity.autoMove(mars, curiosity);
+    //curiosity.autoMove(mars, curiosity);
     mars.display();
 }
 
@@ -470,6 +470,13 @@ void test2_4(){
 int main()
 {
     srand(time(NULL));
-    test2_4();
+    //test1_1();
+    //test1_3();
+    //test1_4();
+    // test1_5();
+    // test1_6();
+    // test2_1();
+     test2_2();
+    // test2_4();
     cout << endl;
 }

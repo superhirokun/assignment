@@ -9,16 +9,63 @@ using namespace std;
 class game
 {
     private:
-    int dimX , dimY ;
-    vector< vector <char> > map; 
+        int dimX , dimY ;
+        vector< vector <char> > map; 
     public:
-    int x, y;
-    game(int x, int y);
-    void init(int x, int y);
-    void display()const;
-    void update_cell(int x, int y, char val);
-    void move(char direction);
+        int x, y;
+        game(int x, int y);
+
+        int getdimX() const;
+        int getdimY() const;
+
+        char trail(int x, int y) const;
+        char moveup(int x, int y)const;
+        char movedown(int x, int y)const;
+        char moveright(int x, int y)const;
+        char moveleft(int x, int y)const;
+
+        void init(int x, int y);
+        void display()const;
+        void update_cell(int x, int y, char val);
 };
+
+class alien: public game
+{
+    private:
+        int X, Y;
+        char in;
+    public:
+        alien(): game(x,y){};
+        int getX() const;
+        int getY() const;
+        void move(game &game);
+};
+
+int game::getdimX() const
+{
+    return dimX;
+}
+int game::getdimY() const
+{
+    return dimY;
+}
+
+char game::trail(int x, int y)const{
+    return map[x][y] == '.';
+}
+
+char game::moveup(int x, int y)const{
+    return map[x+1][y] == 'A';
+}
+char game::movedown(int x, int y)const{
+    return map[x-1][y] == 'A';
+}
+char game::moveright(int x, int y)const{
+    return map[x][y+1] == 'A';
+}
+char game::moveleft(int x, int y)const{
+    return map[x][y-1] == 'A';
+}
 
 game::game(int x, int y)
 {
@@ -45,11 +92,11 @@ void game::init(int x, int y)
     }
     int centreX = dimX/2;
     int centreY = dimY/2;
-    update_cell(centreX, centreY , 'A');
+    map[centreX][centreY] = 'A';
 }
 
 void game::update_cell(int x, int y, char val){
-    map[y][x] = val;
+    map[x][y] = val;
 }
 
 
@@ -96,3 +143,26 @@ void game::display()const
     cout << endl << endl;
 }
 
+void alien::move(game &game)
+{
+    if (in == 'U' || in == 'u'){
+        trail(x,y);
+        moveup(x,y);
+    }
+    else if (in == 'D' || in =='d')
+    {
+        trail(x,y);
+        movedown(x,y);
+    }
+    else if (in == 'R' || in == 'r')
+    {
+        trail(x,y);
+        moveright(x,y);
+    }
+    else if (in == 'L' || in == 'l')
+    {
+        trail(x,y);
+        moveleft(x,y);
+    }
+    
+}
