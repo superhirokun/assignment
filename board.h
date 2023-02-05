@@ -13,29 +13,30 @@ class game
         vector< vector <char> > map; 
     public:
         int x, y;
-        game(int x, int y);
+        game(int x=1, int y=1);
 
         int getdimX() const;
         int getdimY() const;
+        int get_x()const;
+        int get_y()const;
 
-        char trail(int x, int y) const;
-        char moveup(int x, int y)const;
-        char movedown(int x, int y)const;
-        char moveright(int x, int y)const;
-        char moveleft(int x, int y)const;
+        char trail() ;
+        char moveup();
+        char movedown();
+        char moveright();
+        char moveleft();
 
         void init(int x, int y);
         void display()const;
         void update_cell(int x, int y, char val);
+        void position(int &x, int &y);
 };
 
 class alien: public game
 {
-    private:
-        int X, Y;
-        char in;
     public:
-        alien(): game(x,y){};
+        int x, y;
+        alien();
         int getX() const;
         int getY() const;
         void move(game &game);
@@ -45,31 +46,80 @@ int game::getdimX() const
 {
     return dimX;
 }
+
 int game::getdimY() const
 {
     return dimY;
 }
 
-char game::trail(int x, int y)const{
-    return map[x][y] == '.';
+int game::get_x() const
+{
+    return x;
+}
+int game::get_y() const
+{
+    return y;
 }
 
-char game::moveup(int x, int y)const{
-    return map[x+1][y] == 'A';
+void game::position(int &x, int &y)
+{
+    x = dimX;
+    y = dimY;
+    bool found = false;
+    for (int i = 0; i < y && !found; ++i)
+    {
+        for (int k = 0; k < x && !found; ++k)
+        {
+            if (map[i][k] == 'A')
+            {
+                x = i;
+                y = k;
+                found = true;
+            }
+        }
+    }
 }
-char game::movedown(int x, int y)const{
-    return map[x-1][y] == 'A';
+// char game::trail()
+// {
+//     position(x,y);
+//     update_cell(x, y, '.');
+//     return 0;
+// }
+
+char game::moveup(){
+    position(x,y);
+    update_cell(x, y, '.');
+    update_cell(--x, y, 'A');
+    return 0;
 }
-char game::moveright(int x, int y)const{
-    return map[x][y+1] == 'A';
+char game::movedown(){
+    position(x,y);
+    update_cell(x, y, '.');
+    update_cell(++x, y, 'A');
+    return 0;
 }
-char game::moveleft(int x, int y)const{
-    return map[x][y-1] == 'A';
+char game::moveright(){
+    position(x,y);
+    update_cell(x, y, '.');
+    update_cell(x, y+1, 'A');
+    return 0;
+}
+char game::moveleft(){
+    position(x,y);
+    update_cell(x, y, '.');
+    update_cell(x, y-1, 'A');
+    return 0;
 }
 
 game::game(int x, int y)
 {
     init(x, y);
+}
+
+alien::alien()
+{
+    x = game::get_x();
+    y = game::get_y();
 }
 
 void game::init(int x, int y)
@@ -92,7 +142,7 @@ void game::init(int x, int y)
     }
     int centreX = dimX/2;
     int centreY = dimY/2;
-    map[centreX][centreY] = 'A';
+    update_cell(centreX, centreY, 'A');
 }
 
 void game::update_cell(int x, int y, char val){
@@ -143,26 +193,46 @@ void game::display()const
     cout << endl << endl;
 }
 
-void alien::move(game &game)
-{
-    if (in == 'U' || in == 'u'){
-        trail(x,y);
-        moveup(x,y);
+int alien::getX()const{
+    return x;
+}
+
+int alien::getY()const{
+    return y;
+}
+
+
+void alien::move(game &game) {
+    char move;
+    cout << "Enter move (U/D/L/R): ";
+    cin >> move;
+    switch (move) {
+        case 'u':
+        case 'U':
+            game.moveup();
+            //game.trail();
+            game.display();
+            break;
+        case 'd':
+        case 'D':
+            game.movedown();
+            //game.trail();
+            game.display();
+            break;
+        case 'l':
+        case 'L':
+            game.moveleft();
+            //game.trail();
+            game.display();
+            break;
+        case 'r':
+        case 'R':
+            game.moveright();
+            //game.trail();
+            game.display();
+            break;
+        default:
+            cout << "Invalid move." << endl;
+            break;
     }
-    else if (in == 'D' || in =='d')
-    {
-        trail(x,y);
-        movedown(x,y);
-    }
-    else if (in == 'R' || in == 'r')
-    {
-        trail(x,y);
-        moveright(x,y);
-    }
-    else if (in == 'L' || in == 'l')
-    {
-        trail(x,y);
-        moveleft(x,y);
-    }
-    
 }
