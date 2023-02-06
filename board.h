@@ -34,7 +34,6 @@ class game      //don't touch this unless you know what you doing
         void update_cell(int x, int y, char val);
         void position(int &x, int &y);
 
-        void zombie_list();
 };
 
 class alien: public game    //don't touch this unless you know what you doing

@@ -4,31 +4,28 @@ using namespace std;
 #include<string>
 #include"board.h"
 
-class zombies:public game
+class zombies:public game       //don't touch this unless you know what you doing
 {
+    private:
+    vector < vector < vector < int > > > zomb;
     public:
-    int hp, attack, range, X, Y;
+    int hp, attack, range, X, Y, number;
     zombies(){};
     void Stats();
-    void zombies_spawns(int number, int postion);
+    void zombie_list();
 };
 
-void game::zombie_list()
+zombies::zombies(){};
+
+void zombies::zombie_list()
 {
     int num_zombie[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
 
-}
+    for (int i = 0; i > number;){
 
-void zombies::zombies_spawns(int number, int position)
-{
-    for (int i = 0; i < number; i++)
-    {
-        game init(x,y);
-        x = rand() % position;
-        y = rand() % position;
-        
     }
 }
+
 
 void zombies::Stats()
 {
