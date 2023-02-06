@@ -25,10 +25,10 @@ class game
         char moveright();
         char moveleft();
 
-        void checkup(bool stap);
-        void checkdown(bool stap);
-        void checkright(bool stap);
-        void checkleft(bool stap);
+        void checkup(bool &stap);
+        void checkdown(bool &stap);
+        void checkright(bool &stap);
+        void checkleft(bool &stap);
         void init(int x, int y);
         void display()const;
         void update_cell(int x, int y, char val);
@@ -83,40 +83,40 @@ void game::position(int &x, int &y)
     }
 }
 
-void game::checkup(bool stap){
+void game::checkup(bool &stap){
     position(x,y);
-    int nx =- x;
-    if(nx = 'R' || nx < 0 ){
+    int nx = x-1;
+    if(map[nx][y] == 'R' || nx < 0 ){
         stap = true;
     }
     else{
         stap = false;
     }
 }
-void game::checkdown(bool stap){
-    int nx =+ x;
+void game::checkdown(bool &stap){
     position(x,y);
-    if(nx = 'R' ||  nx >=getdimX()){
+    int nx = x+1;
+    if(map[nx][y] == 'R' ||  nx >=getdimY()){
         stap = true;
     }
     else{
         stap = false;
     }
 }
-void game::checkright(bool stap){
+void game::checkright(bool &stap){
     position(x,y);
-    int ny =+ y;
-    if(ny = 'R' || ny >=getdimY()){
+    int ny = y+1;
+    if(map[x][ny] == 'R' || ny >= getdimX()){
         stap = true;
     }
     else{
         stap = false;
     }
 }
-void game::checkleft(bool stap){
+void game::checkleft(bool &stap){
     position(x,y);
-    int ny =- y;
-    if(ny = 'R' || ny < 0){
+    int ny = y-1;
+    if(map[x][ny] == 'R' || ny < 0){
         stap = true;
     }
     else{
@@ -180,7 +180,7 @@ void game::init(int x, int y)
     }
     int centreX = dimX/2;
     int centreY = dimY/2;
-    update_cell(centreX, centreY, 'A');
+    update_cell(centreY, centreX, 'A');
 }
 
 void game::update_cell(int x, int y, char val){
@@ -250,40 +250,60 @@ void alien::move(game &game) {
         case 'U':
             do
             {
-            game.moveup();
-            game.display();
             game.checkup(stap);
-            } while (stap = true);
+            if(stap != false){
+                break;
+            }
+            else{
+                game.moveup();
+                game.display();
+            }
+            } while (stap != true);
             
             break;
         case 'd':
         case 'D':
         do
         {
-            game.movedown();
-            game.display();
             game.checkdown(stap);
-        } while (stap = true);
+            if(stap != false){
+                break;
+            }
+            else{
+                game.movedown();
+                game.display();
+            }
+        } while (stap != true);
         
             break;
         case 'l':
         case 'L':
         do
         {
-            game.moveleft();
-            game.display();
-            game.checkright(stap);
-        } while (stap = true);
+            game.checkleft(stap);
+            if(stap != false){
+                break;
+            }
+            else{
+                game.moveleft();
+                game.display();
+            }
+        } while (stap != true);
         
             break;
         case 'r':
         case 'R':
         do
         {
-            game.moveright();
-            game.display();
-            game.checkleft(stap);
-        } while (stap = true);
+            game.checkright(stap);
+            if(stap != false){
+                break;
+            }
+            else{
+                game.moveright();
+                game.display();
+            }
+        } while (stap != true);
         
             break;
         default:
