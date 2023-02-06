@@ -6,9 +6,8 @@ using namespace std;
 
 class zombies:public game
 {
-    private:
-    int hp, attack, range, move_tile, X, Y;
     public:
+    int hp, attack, range, X, Y;
     void Stats();
     void zombies_spawns(int number, int postion);
     zombies(int number, int postion):game(postion, postion){};
