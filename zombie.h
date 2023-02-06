@@ -8,10 +8,16 @@ class zombies:public game
 {
     public:
     int hp, attack, range, X, Y;
+    zombies(){};
     void Stats();
     void zombies_spawns(int number, int postion);
-    zombies(){};
 };
+
+void game::zombie_list()
+{
+    int num_zombie[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+}
 
 void zombies::zombies_spawns(int number, int position)
 {
@@ -37,25 +43,4 @@ void zombies::Stats()
     hp = ran_hp;
     attack = ran_attack;
     range = ran_range;
-}
-
-int main()
-{
-    srand(time(NULL));
-    int x, y, number, position;
-    cout << "PLease entre the row of your selection = " ;
-    cin >> x;
-    cout << "Please entre the number of colums = ";
-    cin >> y;
-    cout << "Please entre the number of zombies = ";
-    cin >> number;
-    if (x % 2 == 0 || y % 2 == 0)
-    {
-        cout << "Please enter a odd number" << endl;
-    }
-    else 
-    {
-        game mygame(x, y);
-        mygame.display();
-    }
 }

@@ -6,7 +6,7 @@
 #include <iomanip>
 using namespace std;
 
-class game
+class game      //don't touch this unless you know what you doing
 {
     private:
         int dimX , dimY ;
@@ -33,9 +33,11 @@ class game
         void display()const;
         void update_cell(int x, int y, char val);
         void position(int &x, int &y);
+
+        void zombie_list();
 };
 
-class alien: public game
+class alien: public game    //don't touch this unless you know what you doing
 {
     public:
         int x, y;
@@ -64,7 +66,7 @@ int game::get_y() const
     return y;
 }
 
-void game::position(int &x, int &y)
+void game::position(int &x, int &y)     //get position of alien
 {
     x = dimX;
     y = dimY;
@@ -82,18 +84,18 @@ void game::position(int &x, int &y)
         }
     }
 }
-
-void game::checkup(bool &stap){
-    position(x,y);
-    int nx = x-1;
-    if(map[nx][y] == 'R' || nx < 0 ){
+//add new if else statement if you add pod or health pack
+void game::checkup(bool &stap){     //check upward
+    position(x,y);      //get the position of the alien
+    int nx = x-1;       //nx is the position on top of the alien
+    if(map[nx][y] == 'R' || nx < 0 ){   //check if there rock or border
         stap = true;
     }
     else{
         stap = false;
     }
 }
-void game::checkdown(bool &stap){
+void game::checkdown(bool &stap){       //check downward
     position(x,y);
     int nx = x+1;
     if(map[nx][y] == 'R' ||  nx >=getdimY()){
@@ -103,7 +105,7 @@ void game::checkdown(bool &stap){
         stap = false;
     }
 }
-void game::checkright(bool &stap){
+void game::checkright(bool &stap){      //check right
     position(x,y);
     int ny = y+1;
     if(map[x][ny] == 'R' || ny >= getdimX()){
@@ -113,7 +115,7 @@ void game::checkright(bool &stap){
         stap = false;
     }
 }
-void game::checkleft(bool &stap){
+void game::checkleft(bool &stap){       //check left
     position(x,y);
     int ny = y-1;
     if(map[x][ny] == 'R' || ny < 0){
@@ -124,25 +126,25 @@ void game::checkleft(bool &stap){
     }
 }
 
-char game::moveup(){
-    position(x,y);
-    update_cell(x, y, '.');
-    update_cell(--x, y, 'A');
+char game::moveup(){        //move up
+    position(x,y);          //check the position of alien
+    update_cell(x, y, '.');     // put trail the alien original place
+    update_cell(--x, y, 'A');   //move the alien upward
     return 0;
 }
-char game::movedown(){
+char game::movedown(){      //move down
     position(x,y);
     update_cell(x, y, '.');
     update_cell(++x, y, 'A');
     return 0;
 }
-char game::moveright(){
+char game::moveright(){     //move right
     position(x,y);
     update_cell(x, y, '.');
     update_cell(x, ++y, 'A');
     return 0;
 }
-char game::moveleft(){
+char game::moveleft(){      //move left
     position(x,y);
     update_cell(x, y, '.');
     update_cell(x, --y, 'A');
@@ -156,11 +158,11 @@ game::game(int x, int y)
 
 alien::alien()
 {
-    x = game::get_x();
-    y = game::get_y();
+    x = game::get_x();      //get x value from game
+    y = game::get_y();      //get y value from game
 }
 
-void game::init(int x, int y)
+void game::init(int x, int y)       //use to put game obj into the board
 {
     dimX = x; dimY = y;
     vector <char> obj= {' ', ' ', ' ', ' ', ' ', ' ', 'R', 'P', '<', '>', '^', 'v', 'H'}; //non-interative object
@@ -178,18 +180,18 @@ void game::init(int x, int y)
             map[i][k] = obj[obj_no];
         }
     }
-    int centreX = dimX/2;
+    int centreX = dimX/2;           //centre the alien
     int centreY = dimY/2;
-    update_cell(centreY, centreX, 'A');
+    update_cell(centreY, centreX, 'A');     //pass the value to update func 
 }
 
-void game::update_cell(int x, int y, char val){
-    map[x][y] = val;
+void game::update_cell(int x, int y, char val){         //use to change the 2d vector 
+    map[x][y] = val;                                    //use this func if you want to add obj
 }
 
 
-void game::display()const
-{
+void game::display()const       //display the gameboard
+{                               //don't change unless important
     
     for (int i= 0; i < dimY; ++i)
     { 
@@ -232,11 +234,11 @@ void game::display()const
 }
 
 int alien::getX()const{
-    return x;
+    return x;       //get x value
 }
 
 int alien::getY()const{
-    return y;
+    return y;       //get y value 
 }
 
 
@@ -246,22 +248,22 @@ void alien::move(game &game) {
     cout << "Enter move (U/D/L/R): ";
     cin >> move;
     switch (move) {
-        case 'u':
+        case 'u':       //move up
         case 'U':
             do
-            {
-            game.checkup(stap);
-            if(stap != false){
+            {           
+            game.checkup(stap);     //check if the object in front is rock or border
+            if(stap != false){      //if is border or rock stop the while loop
                 break;
             }
             else{
-                game.moveup();
+                game.moveup();      //move if after checking
                 game.display();
             }
             } while (stap != true);
             
-            break;
-        case 'd':
+            break;  
+        case 'd':       //move down
         case 'D':
         do
         {
@@ -276,7 +278,7 @@ void alien::move(game &game) {
         } while (stap != true);
         
             break;
-        case 'l':
+        case 'l':       //move left
         case 'L':
         do
         {
@@ -291,7 +293,7 @@ void alien::move(game &game) {
         } while (stap != true);
         
             break;
-        case 'r':
+        case 'r':       //move right
         case 'R':
         do
         {
@@ -306,7 +308,7 @@ void alien::move(game &game) {
         } while (stap != true);
         
             break;
-        default:
+        default:        //if user enter other case
             cout << "Invalid move." << endl;
             break;
     }
