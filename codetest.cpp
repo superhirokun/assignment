@@ -1,5 +1,4 @@
 #include "board.h"
-#include "zombie.h"
 using namespace std;
 int main()
 {
@@ -30,8 +29,7 @@ int main()
         {
             game mygame(x, y);
             mygame.display();
-            zombies myzom;
-            myzom.zombie_list();
+            zombies zomb;
             alien a;
             a.move(mygame);
 

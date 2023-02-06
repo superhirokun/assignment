@@ -10,7 +10,10 @@ class game      //don't touch this unless you know what you doing
 {
     private:
         int dimX , dimY ;
+    
+    protected:
         vector< vector <char> > map; 
+
     public:
         int x, y;
         game(int x=1, int y=1);
@@ -44,6 +47,17 @@ class alien: public game    //don't touch this unless you know what you doing
         int getX() const;
         int getY() const;
         void move(game &game);
+};
+
+class zombies:public game       //don't touch this unless you know what you doing
+{
+    private:
+    vector < vector < char > > zomb;
+    public:
+    int hp, attack, range, X, Y, number;
+    zombies();
+    void Stats(int &hp ,int &attack ,int &range );
+    void zombie_list(int number, int x, int y);
 };
 
 int game::getdimX() const
@@ -160,6 +174,11 @@ alien::alien()
     x = game::get_x();      //get x value from game
     y = game::get_y();      //get y value from game
 }
+
+zombies::zombies(){
+    x = game::getdimX();
+    y = game::getdimY();
+};
 
 void game::init(int x, int y)       //use to put game obj into the board
 {
@@ -311,4 +330,34 @@ void alien::move(game &game) {
             cout << "Invalid move." << endl;
             break;
     }
+}
+
+void zombies::zombie_list(int number, int x, int y)
+{
+    char num_zombie[] = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
+    zomb.resize(number);
+    for (int i = 0 ;i < number; ++i){
+        Stats(hp, attack, range);
+        int ranX = x / rand();
+        int ranY = y / rand();
+        map[ranX][ranY] = zomb[i][hp, attack, range];
+        update_cell(ranX , ranY, i);
+    }
+}
+
+
+void zombies::Stats(int &hp, int &attack, int &range)
+{
+    int hp_list[] = {50, 100, 150, 200, 250};
+    int attack_list[] = {2, 4, 6, 8};
+    int range_list[] = {1, 2, 3, 4};
+
+    int ran_hp = hp_list[rand() % sizeof(hp_list)/sizeof(hp_list[0])];
+    int ran_attack = attack_list[rand() % sizeof(attack_list)/sizeof(attack_list[0])];
+    int ran_range = range_list[rand() % sizeof(range_list)/sizeof(range_list[0])];
+
+    hp = ran_hp;
+    attack = ran_attack;
+    range = ran_range;
+
 }
