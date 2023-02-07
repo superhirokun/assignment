@@ -16,7 +16,11 @@ class game      //don't touch this unless you know what you doing
 
     public:
         int x, y;
-        game(int x=1, int y=1);
+        game(int x, int y){
+            this->x = x;
+            this->y = y;
+            init(x,y);
+        };
 
         int getdimX() const;
         int getdimY() const;
@@ -32,7 +36,7 @@ class game      //don't touch this unless you know what you doing
         void checkdown(bool &stap);
         void checkright(bool &stap);
         void checkleft(bool &stap);
-        void init(int x, int y);
+        void init(int &x, int &y);
         void display()const;
         void update_cell(int x, int y, char val);
         void position(int &x, int &y);
@@ -42,8 +46,7 @@ class game      //don't touch this unless you know what you doing
 class alien: public game    //don't touch this unless you know what you doing
 {
     public:
-        int x, y;
-        alien();
+        alien(int &x, int &y);
         int getX() const;
         int getY() const;
         void move(game &game);
@@ -52,12 +55,12 @@ class alien: public game    //don't touch this unless you know what you doing
 class zombies:public game       //don't touch this unless you know what you doing
 {
     private:
-    vector < vector < char > > zomb;
+    vector < vector < char> > zomb;
     public:
-    int hp, attack, range, X, Y, number;
-    zombies();
+    int hp, attack, range, number;
+    zombies(int number,int x, int y);
     void Stats(int &hp ,int &attack ,int &range );
-    void zombie_list(int number, int x, int y);
+    void zombie_list(int number, int &x, int &y);
 };
 
 int game::getdimX() const
@@ -100,8 +103,8 @@ void game::position(int &x, int &y)     //get position of alien
 //add new if else statement if you add pod or health pack
 void game::checkup(bool &stap){     //check upward
     position(x,y);      //get the position of the alien
-    int nx = x-1;       //nx is the position on top of the alien
-    if(map[nx][y] == 'R' || nx < 0 ){   //check if there rock or border
+    int nx = x;       //nx is the position on top of the alien
+    if(map[nx][y] == 'R' || nx == 0 ){   //check if there rock or border
         stap = true;
     }
     else{
@@ -111,7 +114,7 @@ void game::checkup(bool &stap){     //check upward
 void game::checkdown(bool &stap){       //check downward
     position(x,y);
     int nx = x+1;
-    if(map[nx][y] == 'R' ||  nx >=getdimY()){
+    if(map[nx][y] == 'R' ||  nx > get_x()){
         stap = true;
     }
     else{
@@ -121,7 +124,7 @@ void game::checkdown(bool &stap){       //check downward
 void game::checkright(bool &stap){      //check right
     position(x,y);
     int ny = y+1;
-    if(map[x][ny] == 'R' || ny >= getdimX()){
+    if(map[x][ny] == 'R' || ny > get_y()){
         stap = true;
     }
     else{
@@ -164,23 +167,21 @@ char game::moveleft(){      //move left
     return 0;
 }
 
-game::game(int x, int y)
-{
-    init(x, y);
-}
 
-alien::alien()
+alien::alien(int &x, int &y): game(x,y)
 {
     x = game::get_x();      //get x value from game
     y = game::get_y();      //get y value from game
 }
 
-zombies::zombies(){
-    x = game::getdimX();
-    y = game::getdimY();
+zombies::zombies(int number,int x, int y): game(x,y)
+{
+    this->number = number;
+    x = game::get_x();
+    y = game::get_y();
 };
 
-void game::init(int x, int y)       //use to put game obj into the board
+void game::init(int &x, int &y)       //use to put game obj into the board
 {
     dimX = x; dimY = y;
     vector <char> obj= {' ', ' ', ' ', ' ', ' ', ' ', 'R', 'P', '<', '>', '^', 'v', 'H'}; //non-interative object
@@ -206,6 +207,7 @@ void game::init(int x, int y)       //use to put game obj into the board
 void game::update_cell(int x, int y, char val){         //use to change the 2d vector 
     map[x][y] = val;                                    //use this func if you want to add obj
 }
+
 
 
 void game::display()const       //display the gameboard
@@ -332,17 +334,32 @@ void alien::move(game &game) {
     }
 }
 
-void zombies::zombie_list(int number, int x, int y)
+void zombies::zombie_list(int number, int &x, int &y)
 {
-    char num_zombie[] = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
+    vector<char> num_zombie= {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
+    srand(time(0));
     zomb.resize(number);
-    for (int i = 0 ;i < number; ++i){
-        Stats(hp, attack, range);
-        int ranX = x / rand();
-        int ranY = y / rand();
-        map[ranX][ranY] = zomb[i][hp, attack, range];
-        update_cell(ranX , ranY, i);
+    for (int i = 0; i < number; ++i)
+    {
+        zomb[i].resize(3);
     }
+    for (int p = 0 ;p < number; ++p){
+        Stats(hp, attack, range);
+        for (int k = 0; k == 0; k++){
+            zomb[p][k] = hp;
+            for (int j = 1; j== 1; j++){
+                zomb[p][j] = attack;
+                for(int l = 2; l==2;l++){
+                    zomb[p][l] = range;
+                }
+            }
+        }
+        int ranX = rand()% (x-1);
+        int ranY = rand()% (y-1);
+        char zo = num_zombie[p];
+        update_cell(ranX , ranY, zo);
+    }
+    display();
 }
 
 

@@ -6,11 +6,11 @@ int main()
     int x, y, number;
     char in;
 
-    cout << "PLease entre the row of your selection = " << endl;
+    cout << "PLease entre the row of your selection = ";
     cin >> x;
-    cout << "Please entre the number of colums = " << endl;
+    cout << "Please entre the number of colums = ";
     cin >> y;
-    cout << "Please entre the number of zombies = "<< endl;
+    cout << "Please entre the number of zombies = ";
     cin >> number;
     if(x > 30 || y > 30)
     {
@@ -28,9 +28,10 @@ int main()
         else 
         {
             game mygame(x, y);
-            mygame.display();
-            zombies zomb;
-            alien a;
+            mygame.init(x,y);
+            zombies zomb(number, x,y);
+            alien a(x, y);
+            zomb.zombie_list(number , x, y);
             a.move(mygame);
 
         }
