@@ -12,8 +12,8 @@ class game      //don't touch this unless you know what you doing
         int dimX , dimY ;
     
     protected:
-        vector< vector <char> > map; 
 
+        vector< vector <char> > map; 
     public:
         int x, y;
         game(int x, int y){
@@ -46,21 +46,23 @@ class game      //don't touch this unless you know what you doing
 class alien: public game    //don't touch this unless you know what you doing
 {
     public:
-        alien(int &x, int &y);
+        int number;
+        alien(int &x, int &y, int number);
         int getX() const;
         int getY() const;
         void move(game &game);
+        void zombie( int &x, int &y, int number, game &game);
 };
 
 class zombies:public game       //don't touch this unless you know what you doing
 {
     private:
-    vector < vector < char> > zomb;
+    vector < vector < char> > zomb; 
     public:
-    int hp, attack, range, number;
+    int hp, attack, range, number; 
     zombies(int number,int x, int y);
-    void Stats(int &hp ,int &attack ,int &range );
-    void zombie_list(int number, int &x, int &y);
+    void Stats(int &hp ,int &attack ,int &range );  
+    void zombie_list(int number, int &x, int &y); 
 };
 
 int game::getdimX() const
@@ -168,14 +170,16 @@ char game::moveleft(){      //move left
 }
 
 
-alien::alien(int &x, int &y): game(x,y)
+alien::alien(int &x, int &y, int number): game(x,y)
 {
+    this->number = number;
     x = game::get_x();      //get x value from game
     y = game::get_y();      //get y value from game
 }
 
 zombies::zombies(int number,int x, int y): game(x,y)
 {
+    
     this->number = number;
     x = game::get_x();
     y = game::get_y();
@@ -334,16 +338,35 @@ void alien::move(game &game) {
     }
 }
 
-void zombies::zombie_list(int number, int &x, int &y)
-{
-    vector<char> num_zombie= {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
+void alien::zombie(int &x, int &y, int number, game &game){
+vector<char> num_zombie= {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
     srand(time(0));
+    
+    for (int p = 0 ;p < number; ++p)
+    {
+        int ranX = rand()% (y-1);
+        int ranY = rand()% (x-1);
+        char zo = num_zombie[p];
+        if((ranX >= y || ranY >= x) &&(map[ranX][ranY] == 'A' && map[ranX][ranY] == zo)){
+            int ranX = rand()% (y-1);
+            int ranY = rand()% (x-1);
+        }
+        else{
+        update_cell(ranX , ranY, zo);
+        }
+
+    }
+    display();
+}
+
+void zombies::zombie_list(int number, int &x, int &y)       //put zombies states into a 2d vector
+{
     zomb.resize(number);
     for (int i = 0; i < number; ++i)
     {
         zomb[i].resize(3);
     }
-    for (int p = 0 ;p < number; ++p){
+    for (int p = 0 ;p < number; ++p){       //zomb[zombie ie '1' or '2' or '3'][the states]
         Stats(hp, attack, range);
         for (int k = 0; k == 0; k++){
             zomb[p][k] = hp;
@@ -354,22 +377,18 @@ void zombies::zombie_list(int number, int &x, int &y)
                 }
             }
         }
-        int ranX = rand()% (x-1);
-        int ranY = rand()% (y-1);
-        char zo = num_zombie[p];
-        update_cell(ranX , ranY, zo);
+
     }
-    display();
 }
 
 
-void zombies::Stats(int &hp, int &attack, int &range)
+void zombies::Stats(int &hp, int &attack, int &range)       //randomize the states by the given value
 {
-    int hp_list[] = {50, 100, 150, 200, 250};
+    int hp_list[] = {50, 100, 150, 200, 250};       //list of value needed
     int attack_list[] = {2, 4, 6, 8};
     int range_list[] = {1, 2, 3, 4};
 
-    int ran_hp = hp_list[rand() % sizeof(hp_list)/sizeof(hp_list[0])];
+    int ran_hp = hp_list[rand() % sizeof(hp_list)/sizeof(hp_list[0])];      //randomize them
     int ran_attack = attack_list[rand() % sizeof(attack_list)/sizeof(attack_list[0])];
     int ran_range = range_list[rand() % sizeof(range_list)/sizeof(range_list[0])];
 

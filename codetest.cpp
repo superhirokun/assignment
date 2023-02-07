@@ -30,7 +30,8 @@ int main()
             game mygame(x, y);
             mygame.init(x,y);
             zombies zomb(number, x,y);
-            alien a(x, y);
+            alien a(x, y, number);
+            a.zombie(x,y, number, mygame);
             zomb.zombie_list(number , x, y);
             a.move(mygame);
 
