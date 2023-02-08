@@ -6,20 +6,18 @@
 #include <iomanip>
 using namespace std;
 
+vector< vector <char> > map; 
+vector < vector < char> > zomb; 
 class game      //don't touch this unless you know what you doing
 {
     private:
         int dimX , dimY ;
     
-    protected:
-
-        vector< vector <char> > map; 
     public:
-        int x, y;
+        int x, y, number;
         game(int x, int y){
             this->x = x;
             this->y = y;
-            init(x,y);
         };
 
         int getdimX() const;
@@ -51,13 +49,11 @@ class alien: public game    //don't touch this unless you know what you doing
         int getX() const;
         int getY() const;
         void move(game &game);
-        void zombie( int &x, int &y, int number, game &game);
+        void zombie( int &x, int &y, int number);
 };
 
 class zombies:public game       //don't touch this unless you know what you doing
 {
-    private:
-    vector < vector < char> > zomb; 
     public:
     int hp, attack, range, number; 
     zombies(int number,int x, int y);
@@ -105,18 +101,31 @@ void game::position(int &x, int &y)     //get position of alien
 //add new if else statement if you add pod or health pack
 void game::checkup(bool &stap){     //check upward
     position(x,y);      //get the position of the alien
-    int nx = x;       //nx is the position on top of the alien
-    if(map[nx][y] == 'R' || nx == 0 ){   //check if there rock or border
-        stap = true;
+    int bx = x;
+    int nx = x-1;       //nx is the position on top of the alien
+    if (nx == -1){
+        nx = 0;
+        if(map[nx][y] == 'R' || bx == 0 ){   //check if there rock or border
+            stap = true;
+        }
+        else{
+            stap = false;
+        }
     }
     else{
-        stap = false;
+        if(map[nx][y] == 'R' || bx == 0 ){   //check if there rock or border
+            stap = true;
+        }
+        else{
+            stap = false;
+        }
+
     }
 }
 void game::checkdown(bool &stap){       //check downward
     position(x,y);
     int nx = x+1;
-    if(map[nx][y] == 'R' ||  nx > get_x()){
+    if(map[y][nx] == 'R' ||  nx >= getdimY()){
         stap = true;
     }
     else{
@@ -126,7 +135,7 @@ void game::checkdown(bool &stap){       //check downward
 void game::checkright(bool &stap){      //check right
     position(x,y);
     int ny = y+1;
-    if(map[x][ny] == 'R' || ny > get_y()){
+    if(map[x][ny] == 'R' || ny >= getdimY()){
         stap = true;
     }
     else{
@@ -338,8 +347,8 @@ void alien::move(game &game) {
     }
 }
 
-void alien::zombie(int &x, int &y, int number, game &game){
-vector<char> num_zombie= {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
+void alien::zombie(int &x, int &y, int number){
+vector<char> num_zombie= {'1', '2', '3', '4', '5', '6', '7', '8', '9'};     //create a zombie 
     srand(time(0));
     
     for (int p = 0 ;p < number; ++p)
@@ -347,7 +356,7 @@ vector<char> num_zombie= {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
         int ranX = rand()% (y-1);
         int ranY = rand()% (x-1);
         char zo = num_zombie[p];
-        if((ranX >= y || ranY >= x) &&(map[ranX][ranY] == 'A' && map[ranX][ranY] == zo)){
+        if((ranX >= y || ranY >= x) ||(map[ranX][ranY] == 'A' || map[ranX][ranY] == zo)){       //check if the zombie position to be spawn have alien or zombie
             int ranX = rand()% (y-1);
             int ranY = rand()% (x-1);
         }
@@ -356,7 +365,6 @@ vector<char> num_zombie= {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
         }
 
     }
-    display();
 }
 
 void zombies::zombie_list(int number, int &x, int &y)       //put zombies states into a 2d vector
