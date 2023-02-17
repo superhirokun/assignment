@@ -27,7 +27,7 @@ int main()
         }
         else 
         {
-            game mygame(x, y);
+            game mygame(x, y, number);
             mygame.init(x,y);
             zombies zomb(number, x,y);
             alien a(x, y, number);

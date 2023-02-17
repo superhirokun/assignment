@@ -8,6 +8,23 @@ using namespace std;
 
 vector< vector <char> > map; 
 vector < vector < char> > zomb; 
+int ClearScreen()
+    {
+        #if defined(_WIN32)
+            return std::system("cls");
+        #elif defined(__linux__) || defined(__APPLE__)
+            return std::system("clear");
+        #endif
+    }
+
+    int Pause()
+    {
+        #if defined(_WIN32)
+            return std::system("pause");
+        #elif defined(__linux__) || defined(__APPLE__)
+            return std::system(R"(read -p "Press any key to continue . . . " dummy)");
+        #endif
+    }
 class game      //don't touch this unless you know what you doing
 {
     private:
@@ -15,9 +32,12 @@ class game      //don't touch this unless you know what you doing
     
     public:
         int x, y, number;
-        game(int x, int y){
+        int attack = 0;
+        int alien_hp = 100;
+        game(int x, int y, int number){
             this->x = x;
             this->y = y;
+            this->number = number;
         };
 
         int getdimX() const;
@@ -98,6 +118,7 @@ void game::position(int &x, int &y)     //get position of alien
         }
     }
 }
+
 //add new if else statement if you add pod or health pack
 void game::checkup(bool &stap){     //check upward
     position(x,y);      //get the position of the alien
@@ -179,14 +200,14 @@ char game::moveleft(){      //move left
 }
 
 
-alien::alien(int &x, int &y, int number): game(x,y)
+alien::alien(int &x, int &y, int number): game(x,y, number)
 {
     this->number = number;
     x = game::get_x();      //get x value from game
     y = game::get_y();      //get y value from game
 }
 
-zombies::zombies(int number,int x, int y): game(x,y)
+zombies::zombies(int number,int x, int y): game(x,y, number)
 {
     
     this->number = number;
@@ -263,6 +284,12 @@ void game::display()const       //display the gameboard
     {
         cout << " " << (k + 1) % 10;
     }
+    cout << endl;
+    cout << "Alien " << "  " << "Hp: " << alien_hp << "   " <<  "Attack: " << attack << endl;
+    for(int n = 0; n < number; ++n){
+        cout << "Zombies " << n+1 << "    " << "Hp: " << "" << "    " << "Attack: " << "" << "    " << "Range: " << "" <<endl;
+    }
+
     cout << endl << endl;
 }
 
