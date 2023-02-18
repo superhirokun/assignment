@@ -7,7 +7,7 @@
 using namespace std;
 
 vector< vector <char> > map; 
-vector < vector < char> > zomb; 
+vector < vector < int> > zomb; 
 int ClearScreen()
     {
         #if defined(_WIN32)
@@ -22,7 +22,7 @@ int ClearScreen()
         #if defined(_WIN32)
             return std::system("pause");
         #elif defined(__linux__) || defined(__APPLE__)
-            return std::system(R"(read -p "Press any key to continue . . . " dummy)");
+            return std::system(R"(read -p "Press any key to continue . . . " )");
         #endif
     }
 class game      //don't touch this unless you know what you doing
@@ -31,8 +31,8 @@ class game      //don't touch this unless you know what you doing
         int dimX , dimY ;
     
     public:
-        int x, y, number;
-        int attack = 0;
+        int x, y, number, zx, zy, z;
+        int attackA = 0;
         int alien_hp = 100;
         game(int x, int y, int number){
             this->x = x;
@@ -50,6 +50,12 @@ class game      //don't touch this unless you know what you doing
         char moveright();
         char moveleft();
 
+        char Zmoveup();
+        char Zmovedown();
+        char Zmoveright();
+        char Zmoveleft();
+
+        void Zcheck();
         void checkup(bool &stap);
         void checkdown(bool &stap);
         void checkright(bool &stap);
@@ -59,6 +65,7 @@ class game      //don't touch this unless you know what you doing
         void update_cell(int x, int y, char val);
         void position(int &x, int &y);
 
+        void Zposition(int &zx, int &zy, int &z);
 };
 
 class alien: public game    //don't touch this unless you know what you doing
@@ -114,6 +121,27 @@ void game::position(int &x, int &y)     //get position of alien
                 x = i;
                 y = k;
                 found = true;
+                cout << "x: "  << x << "  " <<"y: " << y << endl;
+            }
+        }
+    }
+}
+
+void game::Zposition(int &zx, int &zy, int &z){
+    zx = dimX;
+    zy = dimY;
+    char zom = z + '0';
+    bool zfound = false;
+    for (int i = 0; i < zy && !zfound; ++i)
+    {
+        for (int k = 0; k < zx && !zfound; ++k)
+        {
+            if (map[i][k] == zom)
+            {
+                zx = i;
+                zy = k;
+                zfound = true;
+                cout << "zx: "  << zx << "  " <<"zy: " << zy << endl;
             }
         }
     }
@@ -174,6 +202,48 @@ void game::checkleft(bool &stap){       //check left
     }
 }
 
+void game::Zcheck(){
+    bool mU = false;
+    bool mD = false;
+    bool mR = false;
+    bool mL = false;
+    bool cunny_stop = false;
+
+    position(x,y);
+    Zposition(zx,zy,z);
+    if(zx < x){
+        mD = true;
+    }
+    else if(zx > x){
+        mU = true;
+    }
+    else if (zy < y){
+        mR = true;
+    }
+    else if (zy > y){
+        mL = true;
+    }
+    do
+    {
+        if(mD == true){
+            Zmovedown();
+            break;
+        }
+        else if(mU == true){
+            Zmoveup();
+            break;
+        }
+        else if(mR == true){
+            Zmoveright();
+            break;
+        }
+        else if(mL == true){
+            Zmoveleft();
+            break;
+        }
+    } while (cunny_stop == false);
+}
+
 char game::moveup(){        //move up
     position(x,y);          //check the position of alien
     update_cell(x, y, '.');     // put trail the alien original place
@@ -199,6 +269,34 @@ char game::moveleft(){      //move left
     return 0;
 }
 
+char game::Zmoveup(){
+    Zposition(zx, zy, z);
+    char zcunny = z + '0';
+    update_cell(zx, zy, ' ');
+    update_cell(--zx, y, zcunny);
+    return 0;
+}
+char game::Zmovedown(){
+    Zposition(zx, zy, z);
+    char zcunny = z + '0';
+    update_cell(zx, zy, ' ');
+    update_cell(++zx, y, zcunny);
+    return 0;
+}
+char game::Zmoveright(){
+    Zposition(zx, zy, z);
+    char zcunny = z + '0';
+    update_cell(zx, zy, ' ');
+    update_cell(zx, ++y, zcunny);
+    return 0;
+}
+char game::Zmoveleft(){
+    Zposition(zx, zy, z);
+    char zcunny = z + '0';
+    update_cell(zx, zy, ' ');
+    update_cell(zx, --y, zcunny);
+    return 0;
+}
 
 alien::alien(int &x, int &y, int number): game(x,y, number)
 {
@@ -209,7 +307,6 @@ alien::alien(int &x, int &y, int number): game(x,y, number)
 
 zombies::zombies(int number,int x, int y): game(x,y, number)
 {
-    
     this->number = number;
     x = game::get_x();
     y = game::get_y();
@@ -285,9 +382,9 @@ void game::display()const       //display the gameboard
         cout << " " << (k + 1) % 10;
     }
     cout << endl;
-    cout << "Alien " << "  " << "Hp: " << alien_hp << "   " <<  "Attack: " << attack << endl;
+    cout << "Alien " << "       " << "Hp: " << alien_hp << "   " <<  "Attack: " << attackA << endl;
     for(int n = 0; n < number; ++n){
-        cout << "Zombies " << n+1 << "    " << "Hp: " << "" << "    " << "Attack: " << "" << "    " << "Range: " << "" <<endl;
+        cout << "Zombies " << n+1 << "    " << "Hp: " << zomb[n][0] << "    " << "Attack: " << zomb[n][1] << "    " << "Range: " << zomb[n][2] <<endl;
     }
 
     cout << endl << endl;
@@ -378,11 +475,11 @@ void alien::zombie(int &x, int &y, int number){
 vector<char> num_zombie= {'1', '2', '3', '4', '5', '6', '7', '8', '9'};     //create a zombie 
     srand(time(0));
     
-    for (int p = 0 ;p < number; ++p)
+    for (int p = 0 ;p < number; ++p) 
     {
-        int ranX = rand()% (y-1);
+        int ranX = rand()% (y-1); 
         int ranY = rand()% (x-1);
-        char zo = num_zombie[p];
+        char zo = num_zombie[p];    
         if((ranX >= y || ranY >= x) ||(map[ranX][ranY] == 'A' || map[ranX][ranY] == zo)){       //check if the zombie position to be spawn have alien or zombie
             int ranX = rand()% (y-1);
             int ranY = rand()% (x-1);
@@ -419,7 +516,7 @@ void zombies::zombie_list(int number, int &x, int &y)       //put zombies states
 
 void zombies::Stats(int &hp, int &attack, int &range)       //randomize the states by the given value
 {
-    int hp_list[] = {50, 100, 150, 200, 250};       //list of value needed
+    int hp_list[] = {100, 150, 200, 250};       //list of value needed
     int attack_list[] = {2, 4, 6, 8};
     int range_list[] = {1, 2, 3, 4};
 

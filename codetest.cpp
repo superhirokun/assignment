@@ -36,7 +36,20 @@ int main()
             mygame.display();
             do
             {
-            a.move(mygame);
+            int turn = 0;
+            switch(turn){
+                case 0:
+                a.move(mygame);
+                turn = turn + 1;
+                break;
+            }while (turn <= number)
+            {
+                mygame.Zposition(x, y ,turn);
+                mygame.Zcheck();
+                turn = turn +1;
+
+            }
+            
             } while (true);
             
 
