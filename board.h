@@ -151,20 +151,37 @@ void game::Zposition(int &zx, int &zy, int &z){
 }
 
 void game::InRange(){
+    bool U = false, D = false, R = false, L = false;
     position(x,y);
     Zposition(zx, zy, z);
     int rang = zomb[z-1][2];
     int att = zomb[z-1][1];
     cout << "range: " << rang<< endl;
     for (int z= 0; z <= rang; ++z){
-        if((zx+z == x) ||(zx-z == x) ||(zy+z == y) ||(zy-z == y)){
-            cout << "Alien is in range" << endl;
-            alien_hp = alien_hp - att;
-            break;
+        if(zx-z == x){
+            U = true;
         }
-        else{
-            cout << "Alien not in range" << endl;
+        else if(zx+z == x){
+            D = true;
         }
+        else if(zy-z == y){
+            L = true;
+        }
+        else if(zy+z == y){
+            R = true;
+        }
+
+    }
+    if((U == true && L == true) || (U == true && R == true)){
+        cout << "Alien is in range" << endl;
+        alien_hp = alien_hp - att;
+    }
+    else if((D == true && L == true) || (D == true && R == true)){
+        cout << "Alien is in range" << endl;
+        alien_hp = alien_hp - att;
+    }
+    else{
+        cout << "Alien not in range" << endl;
     }
 }
 
@@ -243,7 +260,7 @@ void game::Zcheck(int &zturn){
     this->z = zturn;
     position(x,y);
     Zposition(zx,zy,z);
-    if(zx < x){
+    if(zx < x ){
         mD = true;
         d = x -zx;
     }
@@ -261,23 +278,31 @@ void game::Zcheck(int &zturn){
     }
 
         if(mD == true && (d> r || d > l)){
+            if (map[zx+1][zy] != 'A'){
             Zmovedown();
             display();
+            }
         
         }
         else if(mU == true && (u > r || u > l)){
+            if(map[zx-1][zy] != 'A'){
             Zmoveup();
             display();
+            }
         
         }
         else if(mR == true && (r > u || r > d)){
+            if(map[zx][zy+1] != 'A'){
             Zmoveright();
             display();
+            }
         
         }
         else if(mL == true && (l > u || l > d)){
+            if(map[zx][zy-1] != 'A'){
             Zmoveleft();
             display();
+            }
         
         }
 }
@@ -381,7 +406,7 @@ void game::update_cell(int x, int y, char val){         //use to change the 2d v
 
 void game::display()const       //display the gameboard
 {                               //don't change unless important
-    ClearScreen();
+    //ClearScreen();
     for (int i= 0; i < dimY; ++i)
     { 
         cout << " ";   
@@ -426,7 +451,7 @@ void game::display()const       //display the gameboard
     }
 
     cout << endl << endl;
-    Pause();
+    //Pause();
 }
 
 int alien::getX()const{
