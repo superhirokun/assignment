@@ -7,7 +7,12 @@ using namespace std;
 void setting()
 {
     srand(time(NULL));
+<<<<<<< Updated upstream
     int x, y; char c;
+=======
+    int x, y;
+    char in;
+>>>>>>> Stashed changes
     cout << "PLease entre the row of your selection = " ;
     cin >> x;
     cout << "Please entre the number of colums = ";
@@ -70,6 +75,14 @@ int main()
     {
         game mygame(x, y);
         mygame.display();
+<<<<<<< Updated upstream
     }
 }
 
+=======
+        alien a;
+        a.move(mygame);
+
+    }
+}
+>>>>>>> Stashed changes

@@ -55,7 +55,7 @@ class game      //don't touch this unless you know what you doing
         char Zmoveright();
         char Zmoveleft();
 
-        void Zcheck();
+        void Zcheck(int &zturn);
         void checkup(bool &stap);
         void checkdown(bool &stap);
         void checkright(bool &stap);
@@ -174,17 +174,27 @@ void game::checkup(bool &stap){     //check upward
 void game::checkdown(bool &stap){       //check downward
     position(x,y);
     int nx = x+1;
-    if(map[y][nx] == 'R' ||  nx >= getdimY()){
+    if(nx >= getdimY()){
+        if(map[nx-1][y] == 'R' ||  nx >= getdimY()){
         stap = true;
     }
+        else{
+            stap = false;
+    } 
+    }
     else{
-        stap = false;
+        if(map[nx][y] == 'R' ||  nx >= getdimY()){
+            stap = true;
+        }
+        else{
+            stap = false;
+        }
     }
 }
 void game::checkright(bool &stap){      //check right
     position(x,y);
     int ny = y+1;
-    if(map[x][ny] == 'R' || ny >= getdimY()){
+    if(map[x][ny] == 'R' || ny >= getdimX()){
         stap = true;
     }
     else{
@@ -202,13 +212,13 @@ void game::checkleft(bool &stap){       //check left
     }
 }
 
-void game::Zcheck(){
+void game::Zcheck(int &zturn){
     bool mU = false;
     bool mD = false;
     bool mR = false;
     bool mL = false;
     bool cunny_stop = false;
-
+    this->z = zturn;
     position(x,y);
     Zposition(zx,zy,z);
     if(zx < x){
@@ -223,25 +233,27 @@ void game::Zcheck(){
     else if (zy > y){
         mL = true;
     }
-    do
-    {
+
         if(mD == true){
             Zmovedown();
-            break;
+            display();
+        
         }
         else if(mU == true){
             Zmoveup();
-            break;
+            display();
+        
         }
         else if(mR == true){
             Zmoveright();
-            break;
+            display();
+        
         }
         else if(mL == true){
             Zmoveleft();
-            break;
+            display();
+        
         }
-    } while (cunny_stop == false);
 }
 
 char game::moveup(){        //move up
