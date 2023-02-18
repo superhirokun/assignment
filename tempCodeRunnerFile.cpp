@@ -1,1 +1,1 @@
-    game g1(x,y);
+result = result + charac[rand() % ch_MAX];

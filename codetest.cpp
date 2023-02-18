@@ -14,16 +14,16 @@ int main()
     cin >> number;
     if(x > 30 || y > 30)
     {
-        cout << "The board was too big" << endl;
+        cout << "The board was too big\n";
     }
     else if (number > 9) {
-        cout << "The number of zombies is too much" << endl;
+        cout << "The number of zombies is too much\n";
     }
     else
     {
         if (x % 2 == 0 || y % 2 == 0)
         {
-            cout << "Please enter a odd number" << endl;
+            cout << "Please enter a odd number\n";
         }
         else 
         {

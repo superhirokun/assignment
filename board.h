@@ -67,6 +67,12 @@ class game      //don't touch this unless you know what you doing
 
         void Zposition(int &zx, int &zy, int &z);
         void InRange();
+
+        void rock(int &rx, int &ry);
+        void pod();
+        void healthpack(int &hx, int &hy);
+        void arrow();
+
 };
 
 class alien: public game    //don't touch this unless you know what you doing
@@ -108,6 +114,59 @@ int game::get_x() const
 int game::get_y() const
 {
     return y;
+}
+
+void game::rock(int &rx, int &ry)
+{
+    srand(time(NULL));
+    const int gameobj = 8;
+    char Robj[gameobj]= {' ', ' ', 'P', '<', '>', '^', 'v', 'H'};
+    char cunny_obj = Robj[rand()  % gameobj];
+    map[rx][ry] = cunny_obj;
+    switch (cunny_obj)
+    {
+    case '<':
+    case '>':
+    case '^':
+    case 'v':
+         cout << "You found a arrow\n";
+        break;
+    case 'P':
+        cout << "You found a pod\n";
+        break;
+    case 'H':
+        cout << "You found a healthpack\n";
+        healthpack(rx, ry);
+        break;
+    default:
+        break;
+    } 
+}
+
+void game::pod(){
+    position(x,y);
+    Zposition(zx,zy,z);
+    for(int p = 0; p <= z; ++p){
+
+    }
+}
+
+void game::healthpack(int &hx, int &hy){
+    map[hx][hy] = ' ';
+    srand(time(NULL));
+    int al_hp[3] = {50, 100, 150};
+    int cunnyhp = al_hp[rand() % 3];
+    alien_hp = alien_hp + cunnyhp;
+    cout << "You recorved " << cunnyhp << endl;
+    if (alien_hp == 100){
+        for (int a=0; alien_hp==100;++a){
+            alien_hp = alien_hp -a;
+        }
+    }
+}
+
+void game::arrow(){
+
 }
 
 void game::position(int &x, int &y)     //get position of alien
@@ -173,15 +232,15 @@ void game::InRange(){
 
     }
     if((U == true && L == true) || (U == true && R == true)){
-        cout << "Alien is in range" << endl;
+        cout << "Alien is in range\n";
         alien_hp = alien_hp - att;
     }
     else if((D == true && L == true) || (D == true && R == true)){
-        cout << "Alien is in range" << endl;
+        cout << "Alien is in range\n";
         alien_hp = alien_hp - att;
     }
     else{
-        cout << "Alien not in range" << endl;
+        cout << "Alien not in range\n";
     }
 }
 
@@ -194,6 +253,13 @@ void game::checkup(bool &stap){     //check upward
         nx = 0;
         if(map[nx][y] == 'R' || bx == 0 ){   //check if there rock or border
             stap = true;
+            if(map[nx][y] == 'R'){
+                rock(nx, y);
+            }
+            if(map[nx][y] == 'H'){
+                healthpack(nx, y);
+            }
+
         }
         else{
             stap = false;
@@ -201,7 +267,13 @@ void game::checkup(bool &stap){     //check upward
     }
     else{
         if(map[nx][y] == 'R' || bx == 0 ||map[nx][y] == '1' ||map[nx][y] == '2' ||map[nx][y] == '3' ||map[nx][y] == '4' ||map[nx][y] == '5' ||map[nx][y] == '6' ||map[nx][y] == '7' ||map[nx][y] == '8' ||map[nx][y] == '9'){   //check if there rock or border
-            stap = true;    
+            stap = true;  
+            if(map[nx][y] == 'R'){
+                rock(nx, y);
+            }  
+            if(map[nx][y] == 'H'){
+                healthpack(nx, y);
+            }  
         }
         else{
             stap = false;
@@ -222,7 +294,13 @@ void game::checkdown(bool &stap){       //check downward
     }
     else{
         if(map[nx][y] == 'R' ||  nx >= getdimY()||map[nx][y] == '1' ||map[nx][y] == '2' ||map[nx][y] == '3' ||map[nx][y] == '4' ||map[nx][y] == '5' ||map[nx][y] == '6' ||map[nx][y] == '7' ||map[nx][y] == '8' ||map[nx][y] == '9'){
-            stap = true;    
+            stap = true;  
+            if(map[nx][y] == 'R'){
+                rock(nx, y);
+            }  
+            if(map[nx][y] == 'H'){
+                healthpack(nx, y);
+            }  
         }
         else{
             stap = false;
@@ -233,7 +311,13 @@ void game::checkright(bool &stap){      //check right
     position(x,y);
     int ny = y+1;
     if(map[x][ny] == 'R' || ny >= getdimX()|| map[x][ny] == '1' ||map[x][ny] == '2' ||map[x][ny] == '3' ||map[x][ny] == '4' ||map[x][ny] == '5' ||map[x][ny] == '6' ||map[x][ny] == '7' ||map[x][ny] == '8' ||map[x][ny] == '9'){
-        stap = true;    
+        stap = true;   
+        if(map[x][ny] == 'R'){
+            rock(x, ny);
+        } 
+        if(map[x][ny] == 'H'){
+            healthpack(x, ny);
+        } 
     }
     else{
         stap = false;
@@ -244,6 +328,12 @@ void game::checkleft(bool &stap){       //check left
     int ny = y-1;
     if(map[x][ny] == 'R' || ny < 0|| map[x][ny] == '1' ||map[x][ny] == '2' ||map[x][ny] == '3' ||map[x][ny] == '4' ||map[x][ny] == '5' ||map[x][ny] == '6' ||map[x][ny] == '7' ||map[x][ny] == '8' ||map[x][ny] == '9'){
         stap = true;
+        if(map[x][ny] == 'R'){
+            rock(x, ny);
+        }
+        if(map[x][ny] == 'H'){
+            healthpack(x, ny);
+        }
     }
     else{
         stap = false;
@@ -530,7 +620,7 @@ void alien::move(game &game) {
         
             break;
         default:        //if user enter other case
-            cout << "Invalid move." << endl;
+            cout << "Invalid move.\n";
             break;
     }
 }

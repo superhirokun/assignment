@@ -96,9 +96,18 @@ using namespace std;
 // }
 
 #include<stdio.h>
+void test1(){
+    srand(time(NULL));
+    int al_hp[3] = {50, 100, 150};
+    int cunnyhp = al_hp[rand() % 3];
+    cout << "hp: " << cunnyhp;
+}
 int main()
 {
- int a=1;
- char c=a+ '0';
- printf("Converted character is %c",c);
+  test1();
+  test1();
+  test1();
+  test1();
+  test1();
+  test1();
 }
