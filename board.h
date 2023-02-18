@@ -66,6 +66,7 @@ class game      //don't touch this unless you know what you doing
         void position(int &x, int &y);
 
         void Zposition(int &zx, int &zy, int &z);
+        void InRange();
 };
 
 class alien: public game    //don't touch this unless you know what you doing
@@ -75,8 +76,10 @@ class alien: public game    //don't touch this unless you know what you doing
         alien(int &x, int &y, int number);
         int getX() const;
         int getY() const;
+        
         void move(game &game);
         void zombie( int &x, int &y, int number);
+
 };
 
 class zombies:public game       //don't touch this unless you know what you doing
@@ -143,6 +146,24 @@ void game::Zposition(int &zx, int &zy, int &z){
                 zfound = true;
                 cout << "zx: "  << zx << "  " <<"zy: " << zy << endl;
             }
+        }
+    }
+}
+
+void game::InRange(){
+    position(x,y);
+    Zposition(zx, zy, z);
+    int rang = zomb[z-1][2];
+    int att = zomb[z-1][1];
+    cout << "range: " << rang<< endl;
+    for (int z= 0; z <= rang; ++z){
+        if((zx+z == x) ||(zx-z == x) ||(zy+z == y) ||(zy-z == y)){
+            cout << "Alien is in range" << endl;
+            alien_hp = alien_hp - att;
+            break;
+        }
+        else{
+            cout << "Alien not in range" << endl;
         }
     }
 }
@@ -360,7 +381,7 @@ void game::update_cell(int x, int y, char val){         //use to change the 2d v
 
 void game::display()const       //display the gameboard
 {                               //don't change unless important
-    
+    ClearScreen();
     for (int i= 0; i < dimY; ++i)
     { 
         cout << " ";   
@@ -405,6 +426,7 @@ void game::display()const       //display the gameboard
     }
 
     cout << endl << endl;
+    Pause();
 }
 
 int alien::getX()const{
@@ -534,7 +556,7 @@ void zombies::zombie_list(int number, int &x, int &y)       //put zombies states
 void zombies::Stats(int &hp, int &attack, int &range)       //randomize the states by the given value
 {
     int hp_list[] = {100, 150, 200, 250};       //list of value needed
-    int attack_list[] = {2, 4, 6, 8};
+    int attack_list[] = {5, 10, 15, 20};
     int range_list[] = {1, 2, 3, 4};
 
     int ran_hp = hp_list[rand() % sizeof(hp_list)/sizeof(hp_list[0])];      //randomize them
