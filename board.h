@@ -218,38 +218,43 @@ void game::Zcheck(int &zturn){
     bool mR = false;
     bool mL = false;
     bool cunny_stop = false;
+    int u = 0,d = 0,l = 0,r = 0;
     this->z = zturn;
     position(x,y);
     Zposition(zx,zy,z);
     if(zx < x){
         mD = true;
+        d = x -zx;
     }
     else if(zx > x){
         mU = true;
+        u = zx - x;
     }
     else if (zy < y){
         mR = true;
+        r = y -zy;
     }
     else if (zy > y){
         mL = true;
+        l = zy - y;
     }
 
-        if(mD == true){
+        if(mD == true && (d> r || d > l)){
             Zmovedown();
             display();
         
         }
-        else if(mU == true){
+        else if(mU == true && (u > r || u > l)){
             Zmoveup();
             display();
         
         }
-        else if(mR == true){
+        else if(mR == true && (r > u || r > d)){
             Zmoveright();
             display();
         
         }
-        else if(mL == true){
+        else if(mL == true && (l > u || l > d)){
             Zmoveleft();
             display();
         
@@ -285,28 +290,28 @@ char game::Zmoveup(){
     Zposition(zx, zy, z);
     char zcunny = z + '0';
     update_cell(zx, zy, ' ');
-    update_cell(--zx, y, zcunny);
+    update_cell(--zx, zy, zcunny);
     return 0;
 }
 char game::Zmovedown(){
     Zposition(zx, zy, z);
     char zcunny = z + '0';
     update_cell(zx, zy, ' ');
-    update_cell(++zx, y, zcunny);
+    update_cell(++zx, zy, zcunny);
     return 0;
 }
 char game::Zmoveright(){
     Zposition(zx, zy, z);
     char zcunny = z + '0';
     update_cell(zx, zy, ' ');
-    update_cell(zx, ++y, zcunny);
+    update_cell(zx, ++zy, zcunny);
     return 0;
 }
 char game::Zmoveleft(){
     Zposition(zx, zy, z);
     char zcunny = z + '0';
     update_cell(zx, zy, ' ');
-    update_cell(zx, --y, zcunny);
+    update_cell(zx, --zy, zcunny);
     return 0;
 }
 

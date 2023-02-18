@@ -44,7 +44,7 @@ int main()
                 break;
             }while (turn <= number)
             {
-                //mygame.Zcheck(turn);
+                mygame.Zcheck(turn);
                 turn = turn +1;
 
             }
