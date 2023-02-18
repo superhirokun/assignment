@@ -97,17 +97,15 @@ using namespace std;
 
 #include<stdio.h>
 void test1(){
-    srand(time(NULL));
-    int al_hp[3] = {50, 100, 150};
-    int cunnyhp = al_hp[rand() % 3];
-    cout << "hp: " << cunnyhp;
+    char cunny = '1';
+    char cunny2 = '2';
+    char cunny3 = cunny2;
+    if(cunny3 == '1'||'2'){
+        cout << "cunny" << cunny3<< endl;
+    }
 }
 int main()
 {
   test1();
-  test1();
-  test1();
-  test1();
-  test1();
-  test1();
+  
 }

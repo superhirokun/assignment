@@ -132,10 +132,9 @@ void game::rock(int &rx, int &ry)
          cout << "You found a arrow\n";
         break;
     case 'P':
-        cout << "You found a pod\n";
+        pod();
         break;
     case 'H':
-        cout << "You found a healthpack\n";
         healthpack(rx, ry);
         break;
     default:
@@ -144,10 +143,14 @@ void game::rock(int &rx, int &ry)
 }
 
 void game::pod(){
-    position(x,y);
-    Zposition(zx,zy,z);
-    for(int p = 0; p <= z; ++p){
-
+    for (int n=0;n < 9; ++n){
+    int podcunny = zomb[n][0];
+    if (podcunny != 0){
+        podcunny = podcunny -20;
+        zomb[n][0] = podcunny;
+        cout << "You found a Pod\n" << "Deal 20 damage to Zombie " << n << endl;
+        break;
+    }
     }
 }
 
@@ -157,10 +160,10 @@ void game::healthpack(int &hx, int &hy){
     int al_hp[3] = {50, 100, 150};
     int cunnyhp = al_hp[rand() % 3];
     alien_hp = alien_hp + cunnyhp;
-    cout << "You recorved " << cunnyhp << endl;
-    if (alien_hp == 100){
-        for (int a=0; alien_hp==100;++a){
-            alien_hp = alien_hp -a;
+    cout << "You found a healthpack \n" <<"You recorved " << cunnyhp << endl;
+    if (alien_hp > 100){
+        while(alien_hp > 100){
+            alien_hp = alien_hp - 1;
         }
     }
 }
@@ -256,13 +259,16 @@ void game::checkup(bool &stap){     //check upward
             if(map[nx][y] == 'R'){
                 rock(nx, y);
             }
-            if(map[nx][y] == 'H'){
-                healthpack(nx, y);
-            }
 
         }
         else{
             stap = false;
+            if(map[nx][y] == 'H'){
+                healthpack(nx, y);
+            }
+            else if(map[nx][y] == 'P'){
+                pod();
+            }
         }
     }
     else{
@@ -271,12 +277,15 @@ void game::checkup(bool &stap){     //check upward
             if(map[nx][y] == 'R'){
                 rock(nx, y);
             }  
-            if(map[nx][y] == 'H'){
-                healthpack(nx, y);
-            }  
         }
         else{
             stap = false;
+            if(map[nx][y] == 'H'){
+                healthpack(nx, y);
+            }  
+            else if(map[nx][y] == 'P'){
+                pod();
+            }  
         }
 
     }
@@ -298,12 +307,15 @@ void game::checkdown(bool &stap){       //check downward
             if(map[nx][y] == 'R'){
                 rock(nx, y);
             }  
-            if(map[nx][y] == 'H'){
-                healthpack(nx, y);
-            }  
         }
         else{
             stap = false;
+            if(map[nx][y] == 'H'){
+                healthpack(nx, y);
+            }  
+            else if(map[nx][y] == 'P'){
+                pod();
+            }  
         }
     }
 }
@@ -315,12 +327,15 @@ void game::checkright(bool &stap){      //check right
         if(map[x][ny] == 'R'){
             rock(x, ny);
         } 
-        if(map[x][ny] == 'H'){
-            healthpack(x, ny);
-        } 
     }
     else{
         stap = false;
+        if(map[x][ny] == 'H'){
+            healthpack(x, ny);
+        } 
+        else if(map[x][ny] == 'P'){
+            pod();
+        } 
     }
 }
 void game::checkleft(bool &stap){       //check left
@@ -331,12 +346,16 @@ void game::checkleft(bool &stap){       //check left
         if(map[x][ny] == 'R'){
             rock(x, ny);
         }
-        if(map[x][ny] == 'H'){
-            healthpack(x, ny);
-        }
     }
     else{
         stap = false;
+        if(map[x][ny] == 'H'){
+            healthpack(x, ny);
+        }
+        else if(map[x][ny] == 'P'){
+            pod();
+        }
+
     }
 }
 
