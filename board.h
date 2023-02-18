@@ -200,8 +200,8 @@ void game::checkup(bool &stap){     //check upward
         }
     }
     else{
-        if(map[nx][y] == 'R' || bx == 0 ){   //check if there rock or border
-            stap = true;
+        if(map[nx][y] == 'R' || bx == 0 ||map[nx][y] == '1' ||map[nx][y] == '2' ||map[nx][y] == '3' ||map[nx][y] == '4' ||map[nx][y] == '5' ||map[nx][y] == '6' ||map[nx][y] == '7' ||map[nx][y] == '8' ||map[nx][y] == '9'){   //check if there rock or border
+            stap = true;    
         }
         else{
             stap = false;
@@ -221,8 +221,8 @@ void game::checkdown(bool &stap){       //check downward
     } 
     }
     else{
-        if(map[nx][y] == 'R' ||  nx >= getdimY()){
-            stap = true;
+        if(map[nx][y] == 'R' ||  nx >= getdimY()||map[nx][y] == '1' ||map[nx][y] == '2' ||map[nx][y] == '3' ||map[nx][y] == '4' ||map[nx][y] == '5' ||map[nx][y] == '6' ||map[nx][y] == '7' ||map[nx][y] == '8' ||map[nx][y] == '9'){
+            stap = true;    
         }
         else{
             stap = false;
@@ -232,8 +232,8 @@ void game::checkdown(bool &stap){       //check downward
 void game::checkright(bool &stap){      //check right
     position(x,y);
     int ny = y+1;
-    if(map[x][ny] == 'R' || ny >= getdimX()){
-        stap = true;
+    if(map[x][ny] == 'R' || ny >= getdimX()|| map[x][ny] == '1' ||map[x][ny] == '2' ||map[x][ny] == '3' ||map[x][ny] == '4' ||map[x][ny] == '5' ||map[x][ny] == '6' ||map[x][ny] == '7' ||map[x][ny] == '8' ||map[x][ny] == '9'){
+        stap = true;    
     }
     else{
         stap = false;
@@ -242,7 +242,7 @@ void game::checkright(bool &stap){      //check right
 void game::checkleft(bool &stap){       //check left
     position(x,y);
     int ny = y-1;
-    if(map[x][ny] == 'R' || ny < 0){
+    if(map[x][ny] == 'R' || ny < 0|| map[x][ny] == '1' ||map[x][ny] == '2' ||map[x][ny] == '3' ||map[x][ny] == '4' ||map[x][ny] == '5' ||map[x][ny] == '6' ||map[x][ny] == '7' ||map[x][ny] == '8' ||map[x][ny] == '9'){
         stap = true;
     }
     else{
