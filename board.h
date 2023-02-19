@@ -17,14 +17,15 @@ int ClearScreen()
         #endif
     }
 
-    int Pause()
-    {
-        #if defined(_WIN32)
-            return std::system("pause");
-        #elif defined(__linux__) || defined(__APPLE__)
-            return std::system(R"(read -p "Press any key to continue . . . " )");
-        #endif
-    }
+int Pause()
+{
+    #if defined(_WIN32)
+        return std::system("pause");
+    #elif defined(__linux__) || defined(__APPLE__)
+        return std::system(R"(read -p "Press any key to continue . . . " )");
+    #endif
+}
+
 class game      //don't touch this unless you know what you doing
 {
     private:
@@ -71,8 +72,9 @@ class game      //don't touch this unless you know what you doing
         void rock(int &rx, int &ry);
         void pod();
         void healthpack(int &hx, int &hy);
-        void arrow(int &ax, int &ay);
-
+        void arrow(int &ax, int &ay, char acunny);
+        bool ded(bool &cunnyded);
+        void trail();
 };
 
 class alien: public game    //don't touch this unless you know what you doing
@@ -117,6 +119,37 @@ int game::get_y() const
     return y;
 }
 
+bool game::ded(bool &cunnyded){
+    int ded;
+    for(int d=0; d <= number; ++d){
+        if(zomb[d][0] <= 0){
+            ded = ded + 1;
+        }
+    }
+    if(ded == number){
+        cunnyded = true;
+    }
+    return cunnyded;
+}
+
+void game::trail(){
+    x = dimX;
+    y = dimY;
+    for (int i = 0; i < y; ++i)
+    {
+        for (int k = 0; k < x; ++k)
+        {
+            if (map[i][k] == '.')
+            {
+                srand(time(NULL));
+                const int gameobj = 8;
+                char Robj[gameobj]= {' ', 'R', 'P', '<', '>', '^', 'v', 'H'};
+                char cunny_obj = Robj[rand()  % gameobj];
+                map[i][k] = cunny_obj;
+            }
+        }
+    }
+}
 void game::rock(int &rx, int &ry)
 {
     srand(time(NULL));
@@ -127,10 +160,13 @@ void game::rock(int &rx, int &ry)
     switch (cunny_obj)
     {
     case '<':
+        arrow(rx, ry, '<');
     case '>':
+        arrow(rx, ry,'>');
     case '^':
+        arrow(rx, ry, '^');
     case 'v':
-        arrow(rx, ry);
+        arrow(rx, ry, 'v');
         break;
     case 'P':
         pod();
@@ -149,7 +185,7 @@ void game::pod(){
     if (podcunny != 0){
         podcunny = podcunny -20;
         zomb[n][0] = podcunny;
-        cout << "You found a Pod\n" << "Deal 20 damage to Zombie " << n << endl;
+        cout << "You found a Pod\n" << "Deal 20 damage to Zombie " << n+1 << endl;
         break;
     }
     }
@@ -169,10 +205,11 @@ void game::healthpack(int &hx, int &hy){
     }
 }
 
-void alien::get_arrow(game &games){
+void alien::get_arrow(game &games){ //not working
+    position(x,y);
     int ro, co, nro, nco = 0;
     char arr;
-    cout << "Arrow(rows/column/direaction(u , d, l, r)): \n";
+    cout << "Arrow(rows/column/direaction(u,d,l,r)): \n";
     cin >> ro >> co >> arr;
     if (ro == 0){
         nro = ro;
@@ -180,26 +217,26 @@ void alien::get_arrow(game &games){
     else{
         nro = ro -1;
     }
-    while(co < getdimY()){
+    while(co <= get_y()){
         nco = nco +1;
         ++co;
     }
         switch (arr)
         {
         case 'u':
-            map[nro][nco] = '^';
+            map[nco][nro] = '^';
             display();
             break;
         case 'd':
-            map[nro][nco] = 'v';
+            map[nco][nro] = 'v';
             display();
             break;
         case 'l':
-            map[nro][nco] = '>';
+            map[nco][nro] = '>';
             display();
             break;
         case 'r':
-            map[nro][nco] = '<';
+            map[nco][nro] = '<';
             display();
             break;
         case 'b':
@@ -212,11 +249,11 @@ void alien::get_arrow(game &games){
     
 }
 
-void game::arrow(int &ax, int &ay){
+void game::arrow(int &ax, int &ay, char acunny){
     cout << "You found a arrow\n";
     attackA = attackA + 20;
     bool stap;
-    if(map[ax][ay]== '^'){
+    if(acunny== '^'){
         do
             {           
             checkup(stap);     //check if the object in front is rock or border
@@ -229,7 +266,7 @@ void game::arrow(int &ax, int &ay){
             }
             } while (stap != true);
     }
-    else if(map[ax][ay]== '<'){
+    else if(acunny== '<'){
         do
         {
             checkleft(stap);
@@ -242,7 +279,7 @@ void game::arrow(int &ax, int &ay){
             }
         } while (stap != true);
     }
-    else if(map[ax][ay] == '>'){
+    else if(acunny == '>'){
         do
         {
             checkright(stap);
@@ -255,7 +292,7 @@ void game::arrow(int &ax, int &ay){
             }
         } while (stap != true);
     }
-    else if(map[ax][ay] == 'v'){
+    else if(acunny == 'v'){
         do
         {
             checkdown(stap);
@@ -375,7 +412,8 @@ void game::checkup(bool &stap){     //check upward
             stap = true;  
             if(map[nx][y] == 'R'){
                 rock(nx, y);
-            }  
+            } 
+             
         }
         else{
             stap = false;
@@ -385,8 +423,25 @@ void game::checkup(bool &stap){     //check upward
             else if(map[nx][y] == 'P'){
                 pod();
             }  
-            else if(map[nx][y] == '^'||'v'||'>'||'<'){
-                arrow(nx,y);
+            else if(map[nx][y] == '^'){
+                moveup();
+                display();
+                arrow(nx,y, '^');
+            }  
+            else if(map[nx][y] =='v'){
+                moveup();
+                display();
+                arrow(nx,y, 'v');
+            }  
+            else if(map[nx][y] =='>'){
+                moveup();
+                display();
+                arrow(nx,y, '>');
+            }  
+            else if(map[nx][y] =='<'){
+                moveup();
+                display();
+                arrow(nx,y, '<');
             }  
         }
 
@@ -418,8 +473,25 @@ void game::checkdown(bool &stap){       //check downward
             else if(map[nx][y] == 'P'){
                 pod();
             }  
-            else if(map[nx][y] == '^'||'v'||'>'||'<'){
-                arrow(nx, y);
+            else if(map[nx][y] == '^'){
+                movedown();
+                display();
+                arrow(nx, y, '^');
+            }  
+            else if(map[nx][y] == 'v'){
+                movedown();
+                display();
+                arrow(nx, y, 'v');
+            }  
+            else if(map[nx][y] == '>'){
+                movedown();
+                display();
+                arrow(nx, y, '>');
+            }  
+            else if(map[nx][y] == '<'){
+                movedown();
+                display();
+                arrow(nx, y, '<');
             }  
         }
     }
@@ -441,8 +513,25 @@ void game::checkright(bool &stap){      //check right
         else if(map[x][ny] == 'P'){
             pod();
         } 
-        else if(map[x][ny] == '^'||'v'||'>'||'<'){
-            arrow(x,ny);
+        else if(map[x][ny] == '^'){
+            moveright();
+            display();
+            arrow(x,ny, '^');
+        } 
+        else if(map[x][ny] == 'v'){
+            moveright();
+            display();
+            arrow(x,ny, 'v');
+        } 
+        else if(map[x][ny] == '>'){
+            moveright();
+            display();
+            arrow(x,ny, '>');
+        } 
+        else if(map[x][ny] == '<'){
+            moveright();
+            display();
+            arrow(x,ny, '<');
         } 
     }
 }
@@ -463,8 +552,21 @@ void game::checkleft(bool &stap){       //check left
         else if(map[x][ny] == 'P'){
             pod();
         }
-        else if(map[x][ny] == '^'||'v'||'>'||'<'){
-            arrow(x,ny);
+        else if(map[x][ny] == '^'){
+            moveleft();
+            arrow(x,ny, '^');
+        }
+        else if(map[x][ny] == 'v'){
+            moveleft();
+            arrow(x,ny, 'v');
+        }
+        else if(map[x][ny] == '>'){
+            moveleft();
+            arrow(x,ny, '>');
+        }
+        else if(map[x][ny] == '<'){
+            moveleft();
+            arrow(x,ny, '<');
         }
 
     }
@@ -622,8 +724,6 @@ void game::update_cell(int x, int y, char val){         //use to change the 2d v
     map[x][y] = val;                                    //use this func if you want to add obj
 }
 
-
-
 void game::display()const       //display the gameboard
 {                               //don't change unless important
     //ClearScreen();
@@ -748,7 +848,7 @@ void alien::move(game &game) {
             }
         } while (stap != true);
             break;
-        case 'a':
+        case 'a':       //dosen't work
             get_arrow(game);
             break;
         

@@ -5,16 +5,17 @@ using namespace std;
 // Course: TCP1101 PROGRAMMING FUNDAMENTALS
 // Year: Trimester 1, 2022/23 (T2215)
 // Lab: TT7L
-// Names: Yap Choo Kath Moon 
-// IDs: 1211102270 
-// Emails: 1211102270@student.mmu.edu.my
+// Names: Yap Choo Kath Moon | Fu Ke Yun
+// IDs: 1211102270 | 1211102748
+// Emails: 1211102270@student.mmu.edu.my | 1211102748@student.mmu.edu.my
 // Phones: 017-2643416
 // *********************************************************
 int main()
 {
     srand(time(NULL));
     int x, y, number, options;
-    char in;
+    char in, cunyy;
+    bool cunnyded =false;
 
     cout << "  ALIEN VS ZOMBIES" << endl;
     cout << "-------------------\n";
@@ -24,7 +25,11 @@ int main()
     cout << "Insert Input -> ";
     cin >> options;
 
+    do
+    {
+
     if(options == 1){
+    // ClearScreen();
     cout << "PLease entre the row of your selection = ";
     cin >> x;
     cout << "Please entre the number of colums = ";
@@ -34,6 +39,9 @@ int main()
     if(x > 20 || y > 20)
     {
         cout << "The board was too big\n";
+    }
+    else if(x < 4|| y < 4){
+        cout << "The board was too small\n";
     }
     else if (number > 9) {
         cout << "The number of zombies is too much\n";
@@ -63,15 +71,18 @@ int main()
                 break;
             }while (turn <= number)
             {
+                mygame.trail();
                 mygame.Zcheck(turn);
                 mygame.InRange();
                 turn = turn +1;
-
             }
             
-            } while (mygame.alien_hp > 0);
+            } while (mygame.alien_hp > 0 || mygame.ded(cunnyded)== true);
             if(mygame.alien_hp <= 0){
                 cout << "Game Over\n";
+            }
+            else if(cunnyded == true){
+                cout << "You Win\n";
             }
             
 
@@ -79,6 +90,7 @@ int main()
     }
     }
     else if(options == 2){
+        // ClearScreen();
         cout << "////////////////" << endl;
         cout << "User Manual " << endl;
         cout << "////////////////\n\n"
@@ -99,5 +111,23 @@ int main()
         cout << "    -You have to move around the board in order to collect the pod to kill zombie\n";
         cout << "    -by using arrow you can take more advantage against zombie\n";
         cout << "    -After killing every zombie you win the game\n";
+
+        cout << "Start game?\n";
+        cin >> cunyy;
+        if (cunyy == 'y' || cunyy == 'Y'){
+            // ClearScreen();
+            options = 1;
         }
+        else if(cunyy == 'n' || 'N'){
+            // ClearScreen();
+            cout << "Bye";
+            return 0;
+        }
+        else{
+            // ClearScreen();
+            cout << "Invalid Input";
+        }
+        }
+    } while (cunyy == 'y'||'Y');
+    
     }
