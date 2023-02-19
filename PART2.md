@@ -16,14 +16,7 @@ List all the features completed.
 
 ### To Do
 
-List all the features not yet done. Remove this section if there is no incomplete requirements.
-
-1. Cool Feature #1
-2. *add more*
-
-## Additional Features
-
-Describe the additional features that has been implemented.
+1. File save and load
 
 ## Contributions
 
@@ -40,7 +33,16 @@ Yap Choo Kath Moon
 9. append the intialized zombies states into a 2d vector so that it can be used later
 10. make the zombies move toward the alien
 11. create healthpack that heal alien
-12. create the rock object where when the alien it break the rock and become other game 
+12. create the rock object where when the alien it break the rock and become other game
+13. create the pod object to damage the zombies
+14. create the game menu
+
+Fu ke yun
+
+1. Trying to do the game object but failed and can't be implement into the program.
+2. Trying to do the turn-based system but failed and can't be implement into the program.
+3. Trying to do the File saving and loading feature but failed and can't be implement into the program.
+4. Do the game menu outside the program and didn't implement it into the program
 
 ## Problems Encountered & Solutions
 
