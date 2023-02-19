@@ -726,7 +726,7 @@ void game::update_cell(int x, int y, char val){         //use to change the 2d v
 
 void game::display()const       //display the gameboard
 {                               //don't change unless important
-    //ClearScreen();
+    ClearScreen();
     for (int i= 0; i < dimY; ++i)
     { 
         cout << " ";   
@@ -771,7 +771,7 @@ void game::display()const       //display the gameboard
     }
 
     cout << endl << endl;
-    //Pause();
+    Pause();
 }
 
 int alien::getX()const{

@@ -1,24 +1,22 @@
 # Alien vs. Zombie
 
-Please introduce the game here.
-
-You may add one signature screenshot of your program here or above the title. Check out [this tutorial](https://www.digitalocean.com/community/tutorials/markdown-markdown-images) to learn how to do it.
+The is about killing zombies, once you open the game you can read the user manual in the menu, and when you start the game you could choose how big the board is and how much zombies you want to kill, beware that zombies can hurt and kill you, use power ups to kill them before they kill you.
 
 Please provide the YouTube link to your [Video Demo](https://youtube.com).
 
 ## Compilation Instructions
 
-Provide instructions on how to compile your program, especially when it is non-trivial.
-
-For example:
-
-```
-g++ main.cpp folder1\code.cpp folder2\code.cpp ......
-```
+g++ main.cpp
 
 ## User Manual
 
-
+Menu - 1. to start the game as well as setting the game board and the number of zombies
+       2. to view the game manual.
+In the game - 1. u/U move up.
+              2. d/D move down.
+              3. r move right
+              4. l to move left
+After your turn ends the zombies will move one tile toward you
 
 ## Progress Log
 
@@ -27,7 +25,7 @@ g++ main.cpp folder1\code.cpp folder2\code.cpp ......
 
 ## Contributors
 
-Please replace the following with your group members' names. 
+Please replace the following with your group members' names.
 
 - Yap Choo Kath Moon
 - Fu Ke Yun

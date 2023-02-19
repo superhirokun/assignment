@@ -20,7 +20,7 @@ int main()
     cout << "  ALIEN VS ZOMBIES" << endl;
     cout << "-------------------\n";
     cout << "|(1)Start Game     |\n";
-    cout << "|(2)User Manual    |\n";
+    cout << "|(2)Game Manual    |\n";
     cout << "-------------------\n";
     cout << "Insert Input -> ";
     cin >> options;
@@ -29,7 +29,7 @@ int main()
     {
 
     if(options == 1){
-    // ClearScreen();
+    ClearScreen();
     cout << "PLease entre the row of your selection = ";
     cin >> x;
     cout << "Please entre the number of colums = ";
@@ -90,7 +90,7 @@ int main()
     }
     }
     else if(options == 2){
-        // ClearScreen();
+        ClearScreen();
         cout << "////////////////" << endl;
         cout << "User Manual " << endl;
         cout << "////////////////\n\n"
@@ -115,16 +115,16 @@ int main()
         cout << "Start game?\n";
         cin >> cunyy;
         if (cunyy == 'y' || cunyy == 'Y'){
-            // ClearScreen();
+            ClearScreen();
             options = 1;
         }
         else if(cunyy == 'n' || 'N'){
-            // ClearScreen();
+            ClearScreen();
             cout << "Bye";
             return 0;
         }
         else{
-            // ClearScreen();
+            ClearScreen();
             cout << "Invalid Input";
         }
         }
