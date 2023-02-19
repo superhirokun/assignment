@@ -71,7 +71,7 @@ class game      //don't touch this unless you know what you doing
         void rock(int &rx, int &ry);
         void pod();
         void healthpack(int &hx, int &hy);
-        void arrow();
+        void arrow(int &ax, int &ay);
 
 };
 
@@ -85,6 +85,7 @@ class alien: public game    //don't touch this unless you know what you doing
         
         void move(game &game);
         void zombie( int &x, int &y, int number);
+        void get_arrow(game &games);
 
 };
 
@@ -129,7 +130,7 @@ void game::rock(int &rx, int &ry)
     case '>':
     case '^':
     case 'v':
-         cout << "You found a arrow\n";
+        arrow(rx, ry);
         break;
     case 'P':
         pod();
@@ -168,8 +169,93 @@ void game::healthpack(int &hx, int &hy){
     }
 }
 
-void game::arrow(){
+void alien::get_arrow(game &games){
+    int ro, co;
+    char arr;
+    cout << "Arrow(rows/column/direaction(u , d, l, r)): \n";
+    cin >> ro >> co >> arr;
+    do
+    {
+        switch (arr)
+        {
+        case 'u':
+            map[ro][co] = '^';
+            break;
+        case 'd':
+            map[ro][co] = 'v';
+            break;
+        case 'l':
+            map[ro][co] = '>';
+            break;
+        case 'r':
+            map[ro][co] = '<';
+            break;
+        case 'b':
+            move(games);
+            break;
+        default:
+            cout << "Invalid input";
+            
+        }
+    } while (arr != 'b');
+    
+}
 
+void game::arrow(int &ax, int &ay){
+    cout << "You found a arrow\n";
+    bool stap;
+    if(map[ax][ay]== '^'){
+        do
+            {           
+            checkup(stap);     //check if the object in front is rock or border
+            if(stap != false){      //if is border or rock stop the while loop
+                break;
+            }
+            else{
+                moveup();      //move if after checking
+                display();
+            }
+            } while (stap != true);
+    }
+    else if(map[ax][ay]== '<'){
+        do
+        {
+            checkleft(stap);
+            if(stap != false){
+                break;
+            }
+            else{
+                moveleft();
+                display();
+            }
+        } while (stap != true);
+    }
+    else if(map[ax][ay] == '>'){
+        do
+        {
+            checkright(stap);
+            if(stap != false){
+                break;
+            }
+            else{
+                moveright();
+                display();
+            }
+        } while (stap != true);
+    }
+    else if(map[ax][ay] == 'v'){
+        do
+        {
+            checkdown(stap);
+            if(stap != false){
+                break;
+            }
+            else{
+                movedown();
+                display();
+            }
+        } while (stap != true);
+    }
 }
 
 void game::position(int &x, int &y)     //get position of alien
@@ -286,6 +372,9 @@ void game::checkup(bool &stap){     //check upward
             else if(map[nx][y] == 'P'){
                 pod();
             }  
+            else if(map[nx][y] == '^'||'v'||'>'||'<'){
+                arrow(nx,y);
+            }  
         }
 
     }
@@ -316,6 +405,9 @@ void game::checkdown(bool &stap){       //check downward
             else if(map[nx][y] == 'P'){
                 pod();
             }  
+            else if(map[nx][y] == '^'||'v'||'>'||'<'){
+                arrow(nx, y);
+            }  
         }
     }
 }
@@ -336,6 +428,9 @@ void game::checkright(bool &stap){      //check right
         else if(map[x][ny] == 'P'){
             pod();
         } 
+        else if(map[x][ny] == '^'||'v'||'>'||'<'){
+            arrow(x,ny);
+        } 
     }
 }
 void game::checkleft(bool &stap){       //check left
@@ -354,6 +449,9 @@ void game::checkleft(bool &stap){       //check left
         }
         else if(map[x][ny] == 'P'){
             pod();
+        }
+        else if(map[x][ny] == '^'||'v'||'>'||'<'){
+            arrow(x,ny);
         }
 
     }
@@ -387,28 +485,28 @@ void game::Zcheck(int &zturn){
     }
 
         if(mD == true && (d> r || d > l)){
-            if (map[zx+1][zy] != 'A'){
+            if (map[zx+1][zy] != 'A'||map[zx+1][zy] != '1'||'2'||'3'||'4'||'5'||'6'||'7'||'8'||'9'){
             Zmovedown();
             display();
             }
         
         }
         else if(mU == true && (u > r || u > l)){
-            if(map[zx-1][zy] != 'A'){
+            if(map[zx-1][zy] != 'A'||map[zx-1][zy] != '1'||'2'||'3'||'4'||'5'||'6'||'7'||'8'||'9'){
             Zmoveup();
             display();
             }
         
         }
         else if(mR == true && (r > u || r > d)){
-            if(map[zx][zy+1] != 'A'){
+            if(map[zx][zy+1] != 'A'||map[zx][zy+1] != '1'||'2'||'3'||'4'||'5'||'6'||'7'||'8'||'9'){
             Zmoveright();
             display();
             }
         
         }
         else if(mL == true && (l > u || l > d)){
-            if(map[zx][zy-1] != 'A'){
+            if(map[zx][zy-1] != 'A'|| map[zx][zy-1] != '1'||'2'||'3'||'4'||'5'||'6'||'7'||'8'||'9'){
             Zmoveleft();
             display();
             }
@@ -636,8 +734,11 @@ void alien::move(game &game) {
                 game.display();
             }
         } while (stap != true);
-        
             break;
+        case 'a':
+            get_arrow(game);
+            break;
+        
         default:        //if user enter other case
             cout << "Invalid move.\n";
             break;

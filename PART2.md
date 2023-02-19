@@ -27,10 +27,6 @@ Describe the additional features that has been implemented.
 
 ## Contributions
 
-List down the contribution of each group members.
-
-For example:
-
 Yap Choo Kath Moon
 
 1. Randomly generate game board based on user input.
@@ -42,10 +38,7 @@ Yap Choo Kath Moon
 7. randomized the aombies spawn location and placing them on the board
 8. checking if the alien hit the rock or border and stoping it when it did
 9. append the intialized zombies states into a 2d vector so that it can be used later
+10. make the zombies move toward the alien
+11. create healthpack that heal alien
+12. create the rock object where when the alien it break the rock and become other game objects
 
-Fu ke yun
-
-
-## Problems Encountered & Solutions
-
-Describe the problems encountered and provide the solutions / plan for the solutions.

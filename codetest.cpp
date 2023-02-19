@@ -50,7 +50,7 @@ int main()
 
             }
             
-            } while (true);
+            } while (mygame.alien_hp >= 0);
             
 
         }
