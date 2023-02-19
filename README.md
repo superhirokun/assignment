@@ -2,7 +2,7 @@
 
 The is about killing zombies, once you open the game you can read the user manual in the menu, and when you start the game you could choose how big the board is and how much zombies you want to kill, beware that zombies can hurt and kill you, use power ups to kill them before they kill you.
 
-Please provide the YouTube link to your [Video Demo](https://youtube.com).
+Please provide the YouTube link to your [Video Demo](https://youtu.be/OHFaf16AavY).
 
 ## Compilation Instructions
 
