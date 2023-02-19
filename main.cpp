@@ -39,18 +39,22 @@ int main()
     if(x > 20 || y > 20)
     {
         cout << "The board was too big\n";
+        Pause();
     }
     else if(x < 4|| y < 4){
         cout << "The board was too small\n";
+        Pause();
     }
     else if (number > 9) {
         cout << "The number of zombies is too much\n";
+        Pause();
     }
     else
     {
         if (x % 2 == 0 || y % 2 == 0)
         {
             cout << "Please enter a odd number\n";
+            Pause();
         }
         else 
         {
@@ -80,9 +84,11 @@ int main()
             } while (mygame.alien_hp > 0 || mygame.ded(cunnyded)== true);
             if(mygame.alien_hp <= 0){
                 cout << "Game Over\n";
+                Pause();
             }
             else if(cunnyded == true){
                 cout << "You Win\n";
+                Pause();
             }
             
 
@@ -112,7 +118,7 @@ int main()
         cout << "    -by using arrow you can take more advantage against zombie\n";
         cout << "    -After killing every zombie you win the game\n";
 
-        cout << "Start game?\n";
+        cout << "Start game?(y/n)\n";
         cin >> cunyy;
         if (cunyy == 'y' || cunyy == 'Y'){
             ClearScreen();
