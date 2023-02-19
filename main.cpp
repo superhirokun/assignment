@@ -1,5 +1,7 @@
 #include "board.h"
 using namespace std;
+
+
 int main()
 {
     srand(time(NULL));
@@ -12,7 +14,7 @@ int main()
     cin >> y;
     cout << "Please entre the number of zombies = ";
     cin >> number;
-    if(x > 30 || y > 30)
+    if(x > 20 || y > 20)
     {
         cout << "The board was too big\n";
     }

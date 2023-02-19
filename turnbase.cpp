@@ -97,12 +97,12 @@ using namespace std;
 
 #include<stdio.h>
 void test1(){
-    char cunny = '1';
-    char cunny2 = '2';
-    char cunny3 = cunny2;
-    if(cunny3 == '1'||'2'){
-        cout << "cunny" << cunny3<< endl;
+    int co=10, nco=0; 
+    while(co < 10){
+        nco = nco +1;
+        ++co;
     }
+    cout << nco;
 }
 int main()
 {

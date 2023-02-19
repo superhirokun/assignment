@@ -170,25 +170,37 @@ void game::healthpack(int &hx, int &hy){
 }
 
 void alien::get_arrow(game &games){
-    int ro, co;
+    int ro, co, nro, nco = 0;
     char arr;
     cout << "Arrow(rows/column/direaction(u , d, l, r)): \n";
     cin >> ro >> co >> arr;
-    do
-    {
+    if (ro == 0){
+        nro = ro;
+    }
+    else{
+        nro = ro -1;
+    }
+    while(co < getdimY()){
+        nco = nco +1;
+        ++co;
+    }
         switch (arr)
         {
         case 'u':
-            map[ro][co] = '^';
+            map[nro][nco] = '^';
+            display();
             break;
         case 'd':
-            map[ro][co] = 'v';
+            map[nro][nco] = 'v';
+            display();
             break;
         case 'l':
-            map[ro][co] = '>';
+            map[nro][nco] = '>';
+            display();
             break;
         case 'r':
-            map[ro][co] = '<';
+            map[nro][nco] = '<';
+            display();
             break;
         case 'b':
             move(games);
@@ -197,12 +209,12 @@ void alien::get_arrow(game &games){
             cout << "Invalid input";
             
         }
-    } while (arr != 'b');
     
 }
 
 void game::arrow(int &ax, int &ay){
     cout << "You found a arrow\n";
+    attackA = attackA + 20;
     bool stap;
     if(map[ax][ay]== '^'){
         do
@@ -272,7 +284,6 @@ void game::position(int &x, int &y)     //get position of alien
                 x = i;
                 y = k;
                 found = true;
-                cout << "x: "  << x << "  " <<"y: " << y << endl;
             }
         }
     }
@@ -292,7 +303,6 @@ void game::Zposition(int &zx, int &zy, int &z){
                 zx = i;
                 zy = k;
                 zfound = true;
-                cout << "zx: "  << zx << "  " <<"zy: " << zy << endl;
             }
         }
     }
@@ -321,14 +331,17 @@ void game::InRange(){
 
     }
     if((U == true && L == true) || (U == true && R == true)){
+        cout << "Zombie " << z << "attacks alien\n";
         cout << "Alien is in range\n";
         alien_hp = alien_hp - att;
     }
     else if((D == true && L == true) || (D == true && R == true)){
+        cout << "Zombie " << z << "attacks alien\n";
         cout << "Alien is in range\n";
         alien_hp = alien_hp - att;
     }
     else{
+        cout << "Zombie " << z << "Tried attacks alien\n";
         cout << "Alien not in range\n";
     }
 }
